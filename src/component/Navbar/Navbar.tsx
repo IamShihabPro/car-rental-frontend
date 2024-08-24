@@ -14,6 +14,7 @@ const Navbar = () => {
         { id: 1, link: '/', title: 'Home' },
         { id: 2, link: '/cars', title: 'Cars' },
         { id: 3, link: '/about', title: 'About Us' },
+        { id: 4, link: '/contact', title: 'Contact' },
     ];
 
     const handleScroll = () => {
