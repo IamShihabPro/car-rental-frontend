@@ -1,5 +1,5 @@
 import Bg from '../../assets/images/cars/tesla-8.avif';
-// import Bg from '../../assets/images/cars/bmw-5.webp';
+// import Bg from '../../assets/images/cars/home.webp';
 
 const HeroSection = () => {
     return (

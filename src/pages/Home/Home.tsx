@@ -1,4 +1,5 @@
 import Carousel from "@/component/Carousel/Carousel";
+import FeaturedCars from "@/component/FeaturedCars/FeaturedCars";
 import HeroSection from "@/component/HeroSection/HeroSection";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
         <div>
             <HeroSection/>
             <Carousel/>
+            <FeaturedCars/>
         </div>
     );
 };
