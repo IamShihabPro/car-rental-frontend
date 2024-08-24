@@ -6,7 +6,7 @@ import './Carousal.css';
 import { Autoplay, Pagination } from 'swiper/modules';
 import Slider from './Slider';
 
-import image1 from '../../assets/images/cars/tesla-2.avif'
+import image1 from '../../assets/images/cars/tesla.avif'
 import image2 from '../../assets/images/cars/bmw-4.webp'
 import image3 from '../../assets/images/cars/tesla-3.avif'
 
