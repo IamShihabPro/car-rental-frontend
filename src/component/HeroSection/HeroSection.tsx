@@ -4,7 +4,7 @@ import Bg from '../../assets/images/cars/tesla-8.avif';
 const HeroSection = () => {
     return (
         <section 
-            className="relative h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
+            className="relative h-screen bg-gray-800 bg-cover bg-center bg-no-repeat flex items-center justify-center"
             style={{ backgroundImage: `url(${Bg})` }}
         >
             <div className="absolute inset-0 bg-black opacity-50"></div> {/* Optional overlay for better text visibility */}

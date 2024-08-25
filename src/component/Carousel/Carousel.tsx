@@ -33,7 +33,7 @@ const Carousel = () => {
   ];
 
   return (
-    <div className="bg-white -mt-34 sm:-mt-6 md:-mt-8 lg:-mt-8 py-4">
+    <div className="bg-gray-900 -mt-34 sm:-mt-6 md:-mt-8 lg:-mt-8 py-4">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

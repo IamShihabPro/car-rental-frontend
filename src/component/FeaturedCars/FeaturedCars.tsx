@@ -33,23 +33,23 @@ const carsData: Car[] = [
 
 const FeaturedCars: React.FC = () => {
   return (
-    <section className="bg-gray-200 py-16">
+    <section className="bg-gray-900 py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Featured Cars</h2>
+        <h2 className="text-4xl font-extrabold text-center text-white mb-12">Featured Cars</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {carsData.map((car) => (
             <div
               key={car.id}
-              className="relative bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 transform hover:scale-105"
+              className="relative bg-white shadow-xl overflow-hidden transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl"
             >
               <img
                 src={car.image}
                 alt={car.name}
-                className="w-full h-64 object-cover rounded-t-lg"
+                className="w-full h-64 object-cover"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-4">
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 flex flex-col justify-center items-center p-4">
                 <h3 className="text-white text-xl font-semibold mb-2">{car.name}</h3>
-                <p className="text-white text-lg">${car.price.toFixed(2)}</p>
+                <p className="text-white text-lg font-bold">${car.price.toFixed(2)}</p>
               </div>
             </div>
           ))}
