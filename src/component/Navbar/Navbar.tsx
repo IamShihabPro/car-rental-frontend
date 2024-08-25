@@ -2,6 +2,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import Hamburger from "hamburger-react";
 import { useState, useEffect } from "react";
+import logo from '../../assets/images/cars/car-logo.png'
 
 const Navbar = () => {
     const location = useLocation();
@@ -36,7 +37,7 @@ const Navbar = () => {
                     <div className='hidden md:block lg:block'>
                         <NavLink to="/" className="flex items-center gap-2 text-white">
                             <Link to='/' className="font-bold text-xl">
-                                {/* <img src={logo} className='w-28' alt="" /> */}
+                                <img src={logo} className='w-28' alt="" />
                             </Link>
                         </NavLink>
                     </div>
@@ -71,7 +72,7 @@ const Navbar = () => {
 
                     <div className='block md:hidden lg:hidden'>
                         <NavLink to="/" className="flex items-center gap-2 text-white">
-                            {/* <Link to='/' className="font-bold text-2xl"><img src={logo} className='w-20' alt="" /></Link> */}
+                            <Link to='/' className="font-bold text-2xl"><img src={logo} className='w-20' alt="" /></Link>
                         </NavLink>
                     </div>
 
