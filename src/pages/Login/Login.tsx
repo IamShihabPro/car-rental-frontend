@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Bg from '../../assets/images/cars/tesla.avif';
 import { useLoginMutation } from "@/redux/feature/user/userApi";
@@ -6,6 +5,7 @@ import { toast } from "sonner";
 import { verifyToken } from "@/utils/verifyToken";
 import { setUser, TUser } from "@/redux/feature/user/userSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import { useState } from "react";
 
 interface IFormData {
     email: string;
@@ -14,7 +14,7 @@ interface IFormData {
 
 const Login: React.FC = () => {
     const [login] = useLoginMutation();
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const dispatch = useAppDispatch();
 
     const [formData, setFormData] = useState<IFormData>({
@@ -40,9 +40,10 @@ const Login: React.FC = () => {
             const user = verifyToken(res.token) as TUser;
             console.log(user)
             dispatch(setUser({ user: user, token: res.data.token }));
+            navigate('/')
             toast.success('User Login Succesful')
-          } catch (error) {
-            console.log(error)
+          } catch (error: any) {
+            toast.error(error?.data?.message)
           }
     };
 
