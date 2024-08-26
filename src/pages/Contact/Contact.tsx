@@ -65,7 +65,7 @@ const Contact: React.FC = () => {
                             required
                         ></textarea>
                     </div>
-                    <button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Send Message</button>
+                    <button type="submit" className="w-full bg-transparent border text-white px-4 py-2 rounded-md hover:bg-blue-600">Send Message</button>
                 </form>
 
                 <div className="mt-8 text-center">

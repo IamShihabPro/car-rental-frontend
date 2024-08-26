@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import Bg from '../../assets/images/cars/tesla.avif';
+import Bg from '../../assets/images/cars/rr-9.5.webp';
 import { useLoginMutation } from "@/redux/feature/user/userApi";
 import { toast } from "sonner";
 import { verifyToken } from "@/utils/verifyToken";
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
         >
             <div className="w-full max-w-xl mx-auto shadow-lg p-10 backdrop-blur-lg bg-white/20 rounded-lg">
                 <h3 className="text-xl font-bold text-center mb-10 text-white">
-                    Hello <span className="text-blue-600">Welcome</span>
+                Hello <span className="text-blue-500">Welcome</span>
                 </h3>
 
                 <form onSubmit={handleSubmit} className="py-4 px-3">
@@ -65,7 +65,7 @@ const Login: React.FC = () => {
                             value={formData.email} 
                             onChange={handleInputChange} 
                             placeholder="Enter Your Email"
-                            className="w-full px-4 py-3 border-b border-solid border-gray-600 focus:outline-none focus:border-b-blue-600 text-md leading-7 text-gray-900 bg-transparent"
+                            className="w-full px-4 py-3 border-b border-solid border-white focus:outline-none focus:border-b-blue-600 text-md leading-7 text-white bg-transparent"
                             required
                         />
                     </div>
@@ -76,17 +76,17 @@ const Login: React.FC = () => {
                             value={formData.password} 
                             onChange={handleInputChange} 
                             placeholder="Enter Your Password"
-                            className="w-full px-4 py-3 border-b border-solid border-gray-600 focus:outline-none focus:border-b-blue-600 text-md leading-7 text-gray-900 bg-transparent"
+                            className="w-full px-4 py-3 border-b border-solid border-white focus:outline-none focus:border-b-blue-600 text-md leading-7 text-white bg-transparent"
                             required
                         />
                     </div>
                     <div>
-                        <button type="submit" className="w-full bg-blue-600 px-4 py-2 text-white rounded-sm">Login</button>
+                        <button type="submit" className="w-full mt-4 bg-transparent border px-4 py-2 text-white rounded-sm">Login</button>
                     </div>
 
-                    <p className="text-gray-800 text-center mt-4">
+                    <p className="text-white text-center mt-4">
                         Don't have an account? 
-                        <Link className="ml-1 text-blue-600 font-bold" to='/signup'> Sign Up </Link>
+                        <Link className="ml-1 text-blue-400 font-bold" to='/signup'> Sign Up </Link>
                     </p> 
                 </form>
             </div>    
