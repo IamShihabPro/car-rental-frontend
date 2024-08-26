@@ -40,7 +40,7 @@ const FeaturedCars: React.FC = () => {
           {carsData.map((car) => (
             <div
               key={car.id}
-              className="relative bg-white shadow-xl overflow-hidden transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl"
+              className="relative shadow-xl overflow-hidden transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl"
             >
               <img
                 src={car.image}

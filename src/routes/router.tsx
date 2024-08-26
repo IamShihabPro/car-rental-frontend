@@ -2,6 +2,7 @@ import App from "@/App";
 import ErrorPage from "@/component/ErrorPage/ErrorPage";
 import TermsAndConditions from "@/component/TermsAndConditions/TermsAndConditions";
 import ProtectedRoute from "@/layout/ProtectedRoute";
+import Cars from "@/pages/Cars/Cars";
 import Contact from "@/pages/Contact/Contact";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home/>
+            },
+            {
+                path: '/cars',
+                element: <Cars/>
             },
             {
                 path: '/login',

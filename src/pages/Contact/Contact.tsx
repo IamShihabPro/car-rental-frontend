@@ -73,15 +73,15 @@ const Contact: React.FC = () => {
                     <div className="flex flex-col items-center">
                         <div className="flex items-center mb-2">
                             <FaMapMarkerAlt className="text-blue-500 w-6 h-6 mr-2" />
-                            <p>123 Car Rental St, Car City, CA 90210</p>
+                            <p>Chattogram, Bangladesh</p>
                         </div>
                         <div className="flex items-center mb-2">
                             <FaPhoneAlt className="text-blue-500 w-6 h-6 mr-2" />
-                            <p>(123) 456-7890</p>
+                            <p>(+88) 01850411622</p>
                         </div>
                         <div className="flex items-center mb-2">
                             <FaEnvelope className="text-blue-500 w-6 h-6 mr-2" />
-                            <p>info@carrental.com</p>
+                            <p>mshihab.pro@gmail.com</p>
                         </div>
                     </div>
                 </div>
