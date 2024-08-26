@@ -1,5 +1,6 @@
 import App from "@/App";
 import ErrorPage from "@/component/ErrorPage/ErrorPage";
+import TermsAndConditions from "@/component/TermsAndConditions/TermsAndConditions";
 import Contact from "@/pages/Contact/Contact";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
             {
                 path: '/contact',
                 element: <Contact/>
+            },
+            {
+                path: '/terms',
+                element: <TermsAndConditions/>
             },
         ]
     },

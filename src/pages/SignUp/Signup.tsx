@@ -175,7 +175,6 @@ const Signup: React.FC = () => {
                             <Link 
                                 to="/terms" 
                                 className="text-blue-500 underline ml-1" 
-                                target="_blank"
                             >
                                 Terms & Conditions
                             </Link>
