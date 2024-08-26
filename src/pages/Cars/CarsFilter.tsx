@@ -19,8 +19,9 @@ const CarsFilter: React.FC = () => {
       <div className="mb-4">
         <label className="block text-white mb-2">Search</label>
         <input
-          type="text"
+          type="search"
           value={search}
+          placeholder='search'
           onChange={(e) => setSearch(e.target.value)}
           className="w-full p-2 rounded-md bg-gray-700 text-white"
         />
