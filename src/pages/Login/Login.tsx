@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Bg from '../../assets/images/cars/tesla.avif';
+import { useLoginMutation } from "@/redux/feature/user/userApi";
+import { toast } from "sonner";
+import { verifyToken } from "@/utils/verifyToken";
+import { setUser, TUser } from "@/redux/feature/user/userSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 interface IFormData {
     email: string;
@@ -8,6 +13,10 @@ interface IFormData {
 }
 
 const Login: React.FC = () => {
+    const [login] = useLoginMutation();
+    // const navigate = useNavigate()
+    const dispatch = useAppDispatch();
+
     const [formData, setFormData] = useState<IFormData>({
         email: '',
         password: ''
@@ -21,9 +30,20 @@ const Login: React.FC = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        console.log(formData);
+       
+        try {
+            const res = await login(formData).unwrap();
+            console.log(res)
+            const user = verifyToken(res.token) as TUser;
+            console.log(user)
+            dispatch(setUser({ user: user, token: res.data.token }));
+            toast.success('User Login Succesful')
+          } catch (error) {
+            console.log(error)
+          }
     };
 
     return (

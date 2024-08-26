@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Bg from '../../assets/images/cars/bmw-5.webp';
 import { TSignup } from "@/types/userTypes";
-import { useSignUPMutation } from "@/redux/feature/user/userApi";
+import { useSignupMutation } from "@/redux/feature/user/userApi";
 import { toast } from "sonner";
 
 const Signup: React.FC = () => {
     const [passwordVerify, setPasswordVerify] = useState('')
-    const [Signup] = useSignUPMutation()
+    const [signup] = useSignupMutation()
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState<TSignup>({
         name: '',
@@ -46,9 +47,10 @@ const Signup: React.FC = () => {
                        
             console.log(datas);
             try {
-                const res = await Signup(datas).unwrap();
+                const res = await signup(datas).unwrap();
                 if (res?.success) {
                   toast.success(res?.message);
+                  navigate('/login')
                 }
               } catch (error) {
                 console.log(error)
