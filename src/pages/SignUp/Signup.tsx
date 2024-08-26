@@ -41,18 +41,18 @@ const Signup: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if( formData.password === formData.confirmPassword){
-            // console.log(formData);
+            
             const {name, email, password, role, address, phone, } = formData
             const datas = {name, email, password, role, address, phone}
                        
-            console.log(datas);
+            
             try {
                 const res = await signup(datas).unwrap();
                 if (res?.success) {
                   toast.success(res?.message);
                   navigate('/login')
                 }
-              } catch (error) {
+              } catch (error: any) {
                 console.log(error)
               }
         }else{

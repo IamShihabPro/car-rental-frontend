@@ -32,14 +32,13 @@ const Login: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData);
+        
        
         try {
             const res = await login(formData).unwrap();
-            console.log(res)
             const user = verifyToken(res.token) as TUser;
-            console.log(user)
-            dispatch(setUser({ user: user, token: res.data.token }));
+           
+            dispatch(setUser({ user: user, token: res.token }));
             navigate('/')
             toast.success('User Login Succesful')
           } catch (error: any) {
