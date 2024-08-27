@@ -6,6 +6,7 @@ export type TSignup = {
     confirmPassword: string;
     phone: string;
     address: string;
+    image: string;
     termsAccepted: boolean;
 }
 

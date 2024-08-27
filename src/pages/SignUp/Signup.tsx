@@ -18,6 +18,7 @@ const Signup: React.FC = () => {
         confirmPassword: '',
         phone: '',
         address: '',
+        image: '',
         termsAccepted: false
     });
 
@@ -42,8 +43,8 @@ const Signup: React.FC = () => {
         e.preventDefault();
         if( formData.password === formData.confirmPassword){
             
-            const {name, email, password, role, address, phone, } = formData
-            const datas = {name, email, password, role, address, phone}
+            const {name, email, password, role, address, phone, image} = formData
+            const datas = {name, email, password, role, address, phone, image}
                        
             
             try {
@@ -120,6 +121,18 @@ const Signup: React.FC = () => {
                                 required
                             />
                             <p className="text-white mt-1">{passwordVerify}</p>
+                        </div>
+                        <div className="col-span-1">
+                        <label className="text-white" htmlFor="">Profile Image</label>
+                            <input 
+                                type="text" 
+                                name="image" 
+                                value={formData.image} 
+                                onChange={handleInputChange} 
+                                placeholder="Enter Your Image"
+                                className="w-full px-4 py-3 border border-transparent rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white bg-gray-800 transition duration-300 ease-in-out transform hover:scale-105"
+                                required
+                            />
                         </div>
                         <div className="col-span-1">
                         <label className="text-white" htmlFor="">Role</label>
