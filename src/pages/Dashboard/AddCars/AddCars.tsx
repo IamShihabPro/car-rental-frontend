@@ -1,11 +1,14 @@
+import { useAddCarsMutation } from '@/redux/feature/cars/carsApi';
 import { TCar } from '@/types/userTypes';
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { toast } from 'sonner';
 
 const AddCars: React.FC = () => {
     const { register, handleSubmit, formState: { errors }} = useForm<TCar>();
     const [features, setFeatures] = useState<string[]>([]);
     const [newFeature, setNewFeature] = useState<string>('');
+    const [addCars] = useAddCarsMutation()
 
     const handleAddFeature = () => {
         const trimmedFeature = newFeature.trim();
@@ -23,6 +26,14 @@ const AddCars: React.FC = () => {
         // Add features to the data before submitting
         const carData = { ...data, features };
         console.log(carData);
+        try {
+            const res = await addCars(carData).unwrap();
+            if (res?.success) {
+              toast.success(res?.message);
+            }
+          } catch (error) {
+            console.error(error);
+          }
     };
 
     return (
@@ -64,7 +75,7 @@ const AddCars: React.FC = () => {
                         <label className="mb-2 text-sm font-medium text-gray-700">Price per Hour</label>
                         <input
                             type="number"
-                            step="0.01"
+                            
                             {...register('pricePerHour', {
                                 required: 'Price per hour is required',
                                 valueAsNumber: true

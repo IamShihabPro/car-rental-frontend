@@ -8,9 +8,17 @@ const carsApi = baseApi.injectEndpoints({
                 url: 'cars'
             }),
             providesTags: ['cars']
+        }),
+        addCars: builder.mutation({
+            query: (data) =>({
+                method: 'POST',
+                url:'cars',
+                body: data
+            }),
+            invalidatesTags: ['cars'],
         })
     })
 })
 
-export const {useGetCarsQuery} = carsApi
+export const {useGetCarsQuery, useAddCarsMutation} = carsApi
 export default carsApi
