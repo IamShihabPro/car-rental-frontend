@@ -3,6 +3,18 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import Hamburger from "hamburger-react";
 import { useState, useEffect } from "react";
 import logo from '../../assets/images/cars/car-logo.png'
+ 
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout, selectCurrentUser } from "@/redux/feature/user/userSlice";
+ 
 
 const Navbar = () => {
     const location = useLocation();
@@ -10,13 +22,20 @@ const Navbar = () => {
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visible, setVisible] = useState(true);
     const [navBg, setNavBg] = useState("bg-transparent");
+    const dispatch = useAppDispatch()
+
+    const handleLogout = () =>{
+        dispatch(logout())
+    }
+
+    const user = useAppSelector(selectCurrentUser)
 
     const navItems = [
         { id: 1, link: '/', title: 'Home' },
         { id: 2, link: '/cars', title: 'Cars' },
         { id: 3, link: '/about', title: 'About Us' },
         { id: 4, link: '/contact', title: 'Contact' },
-        { id: 5, link: '/dashboard/profile', title: 'Dashboard' },
+        // { id: 5, link: '/dashboard/profile', title: 'Dashboard' },
     ];
 
     const handleScroll = () => {
@@ -59,7 +78,32 @@ const Navbar = () => {
 
                     <div className='hidden md:block lg:block'>
                         <div className='flex items-center gap-4'>
-                            <Link to='/login' className='border border-white px-6 py-2 text-white font-medium'> Account</Link>
+                            {
+                                user ? <div>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button className="bg-transparent border rounded-none hover:bg-transparent">Dashboard</Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-56">
+                                        {/* <DropdownMenuLabel>Appearance</DropdownMenuLabel> */}
+                                        <DropdownMenuCheckboxItem
+                                       
+                                        >
+                                        <Link to='/dashboard/profile'>Profile</Link>
+                                        </DropdownMenuCheckboxItem>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuCheckboxItem
+                                        onClick={handleLogout}
+                                        >
+                                        Logout
+                                        </DropdownMenuCheckboxItem>
+                                    </DropdownMenuContent>
+                                    </DropdownMenu>
+    
+                                </div> : <Link to='/login' className='border border-white px-6 py-2 text-white font-medium'> Account</Link>
+                            }
+                            
+                            
                             <Link to="/cart" className="flex items-center text-white font-medium gap-2 border border-white px-6 py-2">
                                 <span>Cart</span>
                                 <HiOutlineShoppingBag className="w-6 h-6" />
