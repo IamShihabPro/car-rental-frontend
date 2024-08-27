@@ -1,10 +1,11 @@
 import App from "@/App";
 import ErrorPage from "@/component/ErrorPage/ErrorPage";
 import TermsAndConditions from "@/component/TermsAndConditions/TermsAndConditions";
-import ProtectedRoute from "@/layout/ProtectedRoute";
+// import ProtectedRoute from "@/layout/ProtectedRoute";
 import About from "@/pages/About/About";
 import Cars from "@/pages/Cars/Cars";
 import Contact from "@/pages/Contact/Contact";
+import Dashboard from "@/pages/Dashboard/Dashboard/Dashboard";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
 import Signup from "@/pages/SignUp/Signup";
@@ -38,7 +39,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/contact',
-                element: <ProtectedRoute> <Contact/> </ProtectedRoute>
+                element: <Contact/> 
             },
             {
                 path: '/terms',
@@ -46,4 +47,9 @@ export const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path: '/dashboard',
+        element: <Dashboard/>,
+        children: []
+    }
   ]);
