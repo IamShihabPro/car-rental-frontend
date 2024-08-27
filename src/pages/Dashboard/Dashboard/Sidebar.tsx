@@ -3,10 +3,10 @@ import { IoCloseSharp } from 'react-icons/io5';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const navItems = [
-    { id: 'home', icon: <FaHome className="mr-3 text-xl" />, label: 'Home', link: '/' },
     { id: 'profile', icon: <FaUser className="mr-3 text-xl" />, label: 'Profile', link: '/dashboard/profile' },
     { id: 'addcars', icon: <FaChartBar className="mr-3 text-xl" />, label: 'Add Cars', link: '/dashboard/addcars' },
     { id: 'settings', icon: <FaCog className="mr-3 text-xl" />, label: 'Settings', link: '/dashboard/settings' },
+    { id: 'home', icon: <FaHome className="mr-3 text-xl" />, label: 'Home', link: '/' },
 ];
 
 interface SidebarProps {
