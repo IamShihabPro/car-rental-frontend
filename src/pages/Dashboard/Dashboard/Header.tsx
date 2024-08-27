@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaBars, FaBell, FaUser } from 'react-icons/fa';
 
 const Header = ({ onSidebarToggle }: { onSidebarToggle: () => void }) => {

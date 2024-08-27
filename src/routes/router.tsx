@@ -5,6 +5,7 @@ import TermsAndConditions from "@/component/TermsAndConditions/TermsAndCondition
 import About from "@/pages/About/About";
 import Cars from "@/pages/Cars/Cars";
 import Contact from "@/pages/Contact/Contact";
+import AddCars from "@/pages/Dashboard/AddCars/AddCars";
 import Dashboard from "@/pages/Dashboard/Dashboard/Dashboard";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
@@ -50,6 +51,11 @@ export const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <Dashboard/>,
-        children: []
+        children: [
+            {
+                path: 'addcars',
+                element: <AddCars/>
+            }
+        ]
     }
   ]);
