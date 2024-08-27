@@ -1,19 +1,64 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import CarsFilter from './CarsFilter';
 import { cars } from './CarsData';
 import CarsCard from './CarsCard';
 
 const Cars: React.FC = () => {
+  const [brand, setBrand] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
+  const [sortOrder, setSortOrder] = useState<string>('default');
+
+  // Function to clear all filters
+  const clearFilters = () => {
+    setBrand('');
+    setSearchTerm('');
+    setPriceRange({ min: 0, max: 100 });
+    setSortOrder('default');
+  };
+
+  const filteredCars = useMemo(() => {
+    let sortedCars = [...cars].sort((a, b) => {
+      if (sortOrder === 'lowToHigh') return a.pricePerHour - b.pricePerHour;
+      if (sortOrder === 'highToLow') return b.pricePerHour - a.pricePerHour;
+      return 0; // Default order
+    });
+
+    return sortedCars.filter((car) => {
+      const matchesBrand = brand === '' || car.brand === brand;
+      const matchesSearchTerm =
+        searchTerm === '' ||
+        car.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesPriceRange =
+        car.pricePerHour >= priceRange.min &&
+        car.pricePerHour <= priceRange.max;
+      return matchesBrand && matchesSearchTerm && matchesPriceRange;
+    });
+  }, [brand, searchTerm, priceRange, sortOrder]);
+
   return (
     <section className="bg-gray-900 py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-extrabold text-center text-white mt-10 mb-12">Available Cars</h2>
+        <h2 className="text-4xl font-extrabold text-center text-white mt-10 mb-12">
+          Available Cars
+        </h2>
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-1/4">
-            <CarsFilter />
+            <CarsFilter
+              brands={Array.from(new Set(cars.map((car) => car.brand)))}
+              brand={brand}
+              setBrand={setBrand}
+              priceRange={priceRange}
+              setPriceRange={setPriceRange}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+              clearFilters={clearFilters}
+            />
           </div>
           <div className="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {cars.map((car, index) => (
+            {filteredCars.map((car, index) => (
               <CarsCard key={index} car={car} />
             ))}
           </div>
