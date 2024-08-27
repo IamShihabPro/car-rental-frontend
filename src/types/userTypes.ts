@@ -22,5 +22,5 @@ export interface TCar {
   status: TCarStatus; 
   features: string[];
   pricePerHour: number;
-  isDeleted: boolean;
+  // isDeleted: boolean;
 }

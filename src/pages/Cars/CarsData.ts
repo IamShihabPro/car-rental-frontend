@@ -16,7 +16,7 @@ export const cars: TCar[] = [
       "All-Wheel Drive"
     ],
     pricePerHour: 50,
-    isDeleted: false,
+    // isDeleted: false,
     image: carImage
   },
   {
@@ -33,7 +33,7 @@ export const cars: TCar[] = [
       "Navigation System"
     ],
     pricePerHour: 40,
-    isDeleted: false,
+    // isDeleted: false,
     image: carImage
   },
   {
@@ -50,7 +50,7 @@ export const cars: TCar[] = [
       "Rearview Camera"
     ],
     pricePerHour: 30,
-    isDeleted: false,
+    // isDeleted: false,
     image: carImage
   },
   {
@@ -67,7 +67,7 @@ export const cars: TCar[] = [
       "Adaptive Cruise Control"
     ],
     pricePerHour: 45,
-    isDeleted: false,
+    // isDeleted: false,
     image: carImage
   },
   {
@@ -84,7 +84,7 @@ export const cars: TCar[] = [
       "Panoramic Sunroof"
     ],
     pricePerHour: 55,
-    isDeleted: false,
+    // isDeleted: false,
     image: carImage
   }
 ];

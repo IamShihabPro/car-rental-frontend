@@ -1,15 +1,22 @@
 import React, { useMemo, useState } from 'react';
 import CarsFilter from './CarsFilter';
-import { cars } from './CarsData';
+import { useGetCarsQuery } from '@/redux/feature/cars/carsApi';
+import { TCar } from '@/types/userTypes';
 import CarsCard from './CarsCard';
+import Loader from '@/component/Loader/Loader';
 
 const Cars: React.FC = () => {
+  const {data, isLoading} = useGetCarsQuery(undefined);
+
+
+  const cars = data?.data as TCar[] || [];
+  console.log(cars);
+
   const [brand, setBrand] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
   const [sortOrder, setSortOrder] = useState<string>('default');
 
-  // Function to clear all filters
   const clearFilters = () => {
     setBrand('');
     setSearchTerm('');
@@ -21,20 +28,21 @@ const Cars: React.FC = () => {
     let sortedCars = [...cars].sort((a, b) => {
       if (sortOrder === 'lowToHigh') return a.pricePerHour - b.pricePerHour;
       if (sortOrder === 'highToLow') return b.pricePerHour - a.pricePerHour;
-      return 0; // Default order
+      return 0;
     });
 
     return sortedCars.filter((car) => {
       const matchesBrand = brand === '' || car.brand === brand;
-      const matchesSearchTerm =
-        searchTerm === '' ||
-        car.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesPriceRange =
-        car.pricePerHour >= priceRange.min &&
-        car.pricePerHour <= priceRange.max;
+      const matchesSearchTerm = searchTerm === '' || car.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesPriceRange = car.pricePerHour >= priceRange.min && car.pricePerHour <= priceRange.max;
       return matchesBrand && matchesSearchTerm && matchesPriceRange;
     });
-  }, [brand, searchTerm, priceRange, sortOrder]);
+  }, [cars, brand, searchTerm, priceRange, sortOrder]);
+
+  
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="bg-gray-900 py-16">
@@ -58,9 +66,13 @@ const Cars: React.FC = () => {
             />
           </div>
           <div className="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredCars.map((car, index) => (
-              <CarsCard key={index} car={car} />
-            ))}
+            {filteredCars.length === 0 ? (
+              <div className="text-white text-center">No cars available.</div>
+            ) : (
+              filteredCars.map((car, index) => (
+                <CarsCard key={index} car={car} />
+              ))
+            )}
           </div>
         </div>
       </div>
