@@ -29,47 +29,48 @@ const CarDetails: React.FC = () => {
             <img
               src={car.image}
               alt={car.name}
-              className="rounded-lg shadow-lg w-full object-cover"
+              className="rounded-sm shadow-2xl w-full object-cover transition-transform duration-500 hover:scale-105"
             />
           </div>
 
           {/* Car Details */}
           <div className="md:w-1/2 text-white">
-            <h2 className="text-4xl font-extrabold mb-4">{car.name}</h2>
-            <p className="text-lg text-gray-400 mb-6">{car.description}</p>
-            
+            <h2 className="text-4xl font-extrabold mb-6 border-b-4 border-blue-500 inline-block pb-2">{car.name}</h2>
+            <p className="text-lg text-gray-300 mb-4">{car.description}</p>
+
             <div className="mb-4">
               <h3 className="text-2xl font-semibold">Brand</h3>
-              <p>{car.brand}</p>
+              <p className="text-gray-400">{car.brand}</p>
             </div>
 
             <div className="mb-4">
               <h3 className="text-2xl font-semibold">Color</h3>
-              <p>{car.color}</p>
+              <p className="text-gray-400">{car.color}</p>
+              {/* <div className="w-8 h-8 rounded-full" style={{ backgroundColor: car.color }} /> */}
             </div>
 
             <div className="mb-4">
               <h3 className="text-2xl font-semibold">Features</h3>
-              <ul className="list-disc list-inside">
-                {car?.features?.map((feature : any, index: any) => (
-                  <li key={index}>{feature}</li>
+              <ul className="list-disc list-inside text-gray-400">
+                {car?.features?.map((feature: any, index: any) => (
+                  <li key={index} className="py-1">{feature}</li>
                 ))}
               </ul>
             </div>
 
             <div className="mb-4">
               <h3 className="text-2xl font-semibold">Status</h3>
-              <p className={car.status === 'available' ? 'text-green-500' : 'text-red-500'}>
+              <p className={car.status === 'available' ? 'text-green-400' : 'text-red-400'}>
                 {car.status.charAt(0).toUpperCase() + car.status.slice(1)}
               </p>
             </div>
 
             <div className="mb-4">
               <h3 className="text-2xl font-semibold">Price Per Hour</h3>
-              <p>${car.pricePerHour}</p>
+              <p className="text-3xl font-bold text-blue-400">${car.pricePerHour.toFixed(2)}</p>
             </div>
 
-            <button className="mt-6 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300">
+            <button className="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-sm shadow-lg hover:bg-blue-600 transition-transform duration-300 hover:scale-105">
               Book Now
             </button>
           </div>
