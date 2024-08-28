@@ -1,12 +1,52 @@
 import { useParams } from 'react-router-dom';
 import { useGetSingleCarQuery } from '@/redux/feature/cars/carsApi';
 import Loader from '@/component/Loader/Loader';
+import { useAddBookingsMutation } from '@/redux/feature/booking/bookingApi';
+import { toast } from 'sonner';
+
+
+export type TBooking = {
+  carId: string;
+  date: string;
+  startTime: string;
+};
 
 const CarDetails: React.FC = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetSingleCarQuery(id as string);
+  const [addBookings] = useAddBookingsMutation()
 
   const car = data?.data;
+  // console.log(car)
+
+  const handleAddBookings = async (carInfo: any) => {
+    console.log(carInfo);
+  
+    // Get the current date and time
+    const currentDate = new Date();
+  
+    // Format the date as "YYYY-MM-DD"
+    const formattedDate = currentDate.toISOString().split('T')[0];
+  
+    // Format the time as "HH:MM"
+    const formattedTime = currentDate.toTimeString().slice(0, 5);
+  
+    const booking: TBooking = {
+      carId: carInfo?._id,
+      date: formattedDate,
+      startTime: formattedTime,
+    };
+  
+    try {
+      const res = await addBookings(booking).unwrap();
+      if (res?.success) {
+        toast.success(res?.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to book the car. Please try again later.');
+    }
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -70,7 +110,7 @@ const CarDetails: React.FC = () => {
               <p className="text-3xl font-bold text-blue-400">${car.pricePerHour.toFixed(2)}</p>
             </div>
 
-            <button className="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-sm shadow-lg hover:bg-blue-600 transition-transform duration-300 hover:scale-105">
+            <button onClick={() => handleAddBookings(car)} className="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-sm shadow-lg hover:bg-blue-600 transition-transform duration-300 hover:scale-105">
               Book Now
             </button>
           </div>

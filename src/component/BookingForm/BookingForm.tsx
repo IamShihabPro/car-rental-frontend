@@ -15,6 +15,7 @@ type BookingFormInputs = {
 
 const BookingForm: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<BookingFormInputs>();
+  // const {data} =
 
   const onSubmit: SubmitHandler<BookingFormInputs> = (data) => {
     console.log('Form submitted:', data);
