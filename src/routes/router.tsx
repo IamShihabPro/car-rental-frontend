@@ -6,6 +6,7 @@ import About from "@/pages/About/About";
 import Cars from "@/pages/Cars/Cars";
 import Contact from "@/pages/Contact/Contact";
 import AddCars from "@/pages/Dashboard/AddCars/AddCars";
+import AllCars from "@/pages/Dashboard/AllCars/AllCars";
 import Dashboard from "@/pages/Dashboard/Dashboard/Dashboard";
 import Profile from "@/pages/Dashboard/Profile/Profile";
 import Home from "@/pages/Home/Home";
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/profile',
                 element: <Profile/>
+            },
+            {
+                path: '/dashboard/allcars',
+                element: <AllCars/>
             },
         ]
     }

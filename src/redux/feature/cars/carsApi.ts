@@ -16,9 +16,32 @@ const carsApi = baseApi.injectEndpoints({
                 body: data
             }),
             invalidatesTags: ['cars'],
-        })
+        }),
+        getSingleCar: builder.query({
+            query: (id) => ({
+                method: 'GET',
+                url: `cars/${id}` 
+            }),
+            providesTags: ['cars'],
+        }),
+        deleteCar: builder.mutation({
+            query: (id) => ({
+              url: `cars/${id}`,
+              method: 'DELETE',
+            }),
+            invalidatesTags: ['cars'],
+        }),
+        updateCar: builder.mutation({
+            query: ({ id, ...data }) => ({
+              method: 'PUT',
+              url: `cars/${id}`,
+              body: data,
+            }),
+            invalidatesTags: ['cars'],
+        }),
+      
     })
 })
 
-export const {useGetCarsQuery, useAddCarsMutation} = carsApi
+export const {useGetCarsQuery, useAddCarsMutation, useGetSingleCarQuery, useDeleteCarMutation, useUpdateCarMutation} = carsApi
 export default carsApi

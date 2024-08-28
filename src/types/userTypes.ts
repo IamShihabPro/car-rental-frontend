@@ -13,6 +13,7 @@ export type TSignup = {
 export type TCarStatus = 'available' | 'unavailable';
 
 export interface TCar {
+  _id: string;
   brand: string;
   name: string;
   description: string;

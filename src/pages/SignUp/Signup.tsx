@@ -55,6 +55,7 @@ const Signup: React.FC = () => {
                 }
               } catch (error: any) {
                 console.log(error)
+                toast.error(error?.data?.message)
               }
         }else{
             setPasswordVerify("Password do not match")
@@ -120,7 +121,7 @@ const Signup: React.FC = () => {
                                 className="w-full px-4 py-3 border border-transparent rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white bg-gray-800 transition duration-300 ease-in-out transform hover:scale-105"
                                 required
                             />
-                            <p className="text-white mt-1">{passwordVerify}</p>
+                            <p className="text-red-500 mt-1">{passwordVerify}</p>
                         </div>
                         <div className="col-span-1">
                         <label className="text-white" htmlFor="">Profile Image</label>
