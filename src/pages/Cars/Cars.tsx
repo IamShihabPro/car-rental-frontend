@@ -66,7 +66,7 @@ const Cars: React.FC = () => {
           {/* Cars Listing Section */}
           <div className="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCars.length === 0 ? (
-              <div className="text-white text-center col-span-full">
+              <div className="text-white text-center text-4xl font-bold col-span-full">
                 No cars available.
               </div>
             ) : (

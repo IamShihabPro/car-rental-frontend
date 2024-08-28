@@ -3,6 +3,7 @@ import ErrorPage from "@/component/ErrorPage/ErrorPage";
 import TermsAndConditions from "@/component/TermsAndConditions/TermsAndConditions";
 // import ProtectedRoute from "@/layout/ProtectedRoute";
 import About from "@/pages/About/About";
+import CarDetails from "@/pages/Cars/CarDetails";
 import Cars from "@/pages/Cars/Cars";
 import Contact from "@/pages/Contact/Contact";
 import AddCars from "@/pages/Dashboard/AddCars/AddCars";
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
             {
                 path: '/cars',
                 element: <Cars/>
+            },
+            {
+                path: '/cars/:id',
+                element: <CarDetails/>
             },
             {
                 path: '/about',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { TCar } from '@/types/userTypes';
+import { Link } from 'react-router-dom';
 
 interface CarsCardProps {
   car: TCar;
@@ -21,9 +22,9 @@ const CarsCard: React.FC<CarsCardProps> = ({ car }) => {
         </p>
         <p className="text-white text-sm mb-6 line-clamp-3">{car?.description}</p>
         <div className="flex justify-center items-center gap-4">
-          <button className="bg-white bg-opacity-20 border border-white px-6 py-3 text-white font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300 rounded-sm shadow-md">
+          <Link to={`/cars/${car?._id}`} className="bg-white bg-opacity-20 border border-white px-6 py-3 text-white font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300 rounded-sm shadow-md">
             Details
-          </button>
+          </Link>
           <button className="bg-white bg-opacity-20 border border-white px-6 py-3 text-white font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300 rounded-sm shadow-md">
             Book Now
           </button>
