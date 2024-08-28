@@ -1,4 +1,5 @@
 import App from "@/App";
+import BookingForm from "@/component/BookingForm/BookingForm";
 import ErrorPage from "@/component/ErrorPage/ErrorPage";
 import TermsAndConditions from "@/component/TermsAndConditions/TermsAndConditions";
 // import ProtectedRoute from "@/layout/ProtectedRoute";
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
             {
                 path: '/terms',
                 element: <TermsAndConditions/>
+            },
+            {
+                path: '/booking',
+                element: <BookingForm/>
             },
         ]
     },
