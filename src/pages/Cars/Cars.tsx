@@ -6,11 +6,8 @@ import CarsCard from './CarsCard';
 import Loader from '@/component/Loader/Loader';
 
 const Cars: React.FC = () => {
-  const {data, isLoading} = useGetCarsQuery(undefined);
-
-
+  const { data, isLoading } = useGetCarsQuery(undefined);
   const cars = data?.data as TCar[] || [];
-  console.log(cars);
 
   const [brand, setBrand] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -39,7 +36,6 @@ const Cars: React.FC = () => {
     });
   }, [cars, brand, searchTerm, priceRange, sortOrder]);
 
-  
   if (isLoading) {
     return <Loader />;
   }
@@ -51,6 +47,7 @@ const Cars: React.FC = () => {
           Available Cars
         </h2>
         <div className="flex flex-col lg:flex-row gap-8">
+          {/* Filters Section */}
           <div className="lg:w-1/4">
             <CarsFilter
               brands={Array.from(new Set(cars.map((car) => car.brand)))}
@@ -65,9 +62,13 @@ const Cars: React.FC = () => {
               clearFilters={clearFilters}
             />
           </div>
+
+          {/* Cars Listing Section */}
           <div className="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCars.length === 0 ? (
-              <div className="text-white text-center">No cars available.</div>
+              <div className="text-white text-center col-span-full">
+                No cars available.
+              </div>
             ) : (
               filteredCars.map((car, index) => (
                 <CarsCard key={index} car={car} />
