@@ -69,7 +69,7 @@ const AllCars = () => {
             {cars.length > 0 ? (
                 <>
                     <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-8 text-gray-800">All Cars</h1>
-                    <div className="overflow-x-auto shadow-md sm:rounded-lg">
+                    <div className="overflow-x-auto shadow-md sm:rounded-lg mx-4">
                         <table className="min-w-full bg-white border rounded-lg overflow-hidden">
                             <thead className="bg-gray-800 text-white">
                                 <tr className="text-center">

@@ -15,7 +15,7 @@ const Dashboard = () => {
             <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
             <div className="flex-1 flex flex-col">
                 <Header onSidebarToggle={toggleSidebar} />
-                <div className='mt-20 mx-4 flex-1'>
+                <div className='mt-16 flex-1'>
                     <Outlet/>
                 </div>
             </div>

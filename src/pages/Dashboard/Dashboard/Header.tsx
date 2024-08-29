@@ -1,6 +1,16 @@
+import { logout } from '@/redux/feature/user/userSlice';
+import { useAppDispatch } from '@/redux/hooks';
 import { FaBars, FaBell, FaUser } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ onSidebarToggle }: { onSidebarToggle: () => void }) => {
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const handleLogout = () =>{
+        dispatch(logout())
+        navigate('/login')
+        
+    }
     return (
         <header className="bg-gray-800 text-white p-4 flex items-center justify-between w-full fixed top-0 left-0 z-30 shadow-md">
             {/* Sidebar Toggle Button */}
@@ -26,7 +36,7 @@ const Header = ({ onSidebarToggle }: { onSidebarToggle: () => void }) => {
                     <FaUser className="text-xl" />
                     <span className="hidden md:inline">Profile</span>
                 </button>
-                <button className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded focus:outline-none transition">
+                <button onClick={handleLogout} className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded focus:outline-none transition">
                     Logout
                 </button>
             </div>

@@ -37,7 +37,7 @@ const AddCars: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className='mx-6'>
             <h1 className='text-4xl font-extrabold text-center mt-10 mb-12'>Add Cars</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 my-10">
 

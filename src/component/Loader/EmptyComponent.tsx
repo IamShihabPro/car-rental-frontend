@@ -2,7 +2,7 @@ import React from 'react';
 import errorCar from '../../assets/images/cars/cyber-truck.png'
 import './ErrorComponent.css';
 
-const ErrorComponent: React.FC = () => {
+const EmptyComponent: React.FC = () => {
   return (
     <div className="flex flex-col justify-center items-center h-[100vh] bg-gray-900 p-4">
       <div className="flex flex-row items-center space-x-2 gap-4">
@@ -14,7 +14,7 @@ const ErrorComponent: React.FC = () => {
         <span className="text-7xl font-thin text-gray-500 animate-bounce">...</span>
       </div>
       <p className="mt-5 text-xl text-gray-400 animate-pulse">
-        It looks like there’s nothing here. Please check back later.
+        It looks like there’s nothing here. Please reserve a car.
       </p>
       <div className="w-full flex justify-center overflow-hidden mt-8">
         <img
@@ -28,4 +28,4 @@ const ErrorComponent: React.FC = () => {
   );
 };
 
-export default ErrorComponent;
+export default EmptyComponent;

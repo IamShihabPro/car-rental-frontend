@@ -30,7 +30,7 @@ const Profile: React.FC = () => {
     }
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-white">
+        <div className="flex justify-center items-center min-h-screen bg-gray-900">
             <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
                 <div className="flex items-center p-6 bg-gradient-to-r from-blue-500 to-indigo-600">
                     <img
