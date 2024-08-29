@@ -38,7 +38,6 @@ const Navbar = () => {
         { id: 2, link: '/cars', title: 'Cars' },
         { id: 3, link: '/about', title: 'About Us' },
         { id: 4, link: '/contact', title: 'Contact' },
-        // { id: 5, link: '/dashboard/profile', title: 'Dashboard' },
     ];
 
     const handleScroll = () => {
@@ -85,7 +84,7 @@ const Navbar = () => {
                                 user ? <div>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button className="bg-transparent border rounded-none hover:bg-transparent">Dashboard</Button>
+                                        <Button className={` px-6 py-2 font-medium ${theme?.isDarkMode === true ? 'text-white border border-white bg-transparent hover:bg-transparent' : 'text-blue-600 border border-blue-500 bg-transparent hover:bg-transparent'}`}>Dashboard</Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className="w-56">
                                         {/* <DropdownMenuLabel>Appearance</DropdownMenuLabel> */}
@@ -128,12 +127,12 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className={`md:hidden lg:hidden py-2 px-2 shadow-sm fixed left-0 top-0 h-full w-2/3 transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} bg-gray-800`}>
-                    <div className="-mr-2 md:hidden shadow-md inline-block text-white p-3">
+                <div className={`md:hidden bg-gray-800 lg:hidden py-2 px-2 shadow-sm fixed left-0 top-0 h-[100vh] w-2/3 transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                    <div className="-mr-2 bg-gray-800 md:hidden shadow-md inline-block text-white p-3">
                         <Hamburger toggled={isOpen} toggle={setIsOpen} />
                     </div>
 
-                    <div className="flex flex-col justify-start items-start h-full mt-16">
+                    <div className="flex flex-col bg-gray-800 justify-start items-start h-full mt-16">
                         {navItems.map(({ id, link, title }) => (
                             <NavLink
                                 key={id}
@@ -146,7 +145,30 @@ const Navbar = () => {
                         ))}
 
                         <div className='mt-4'>
-                            <Link to='/login' className='border border-white ms-8 px-6 py-2 text-white font-bold'> Account</Link>
+                            {
+                                user ? <div className="">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button className='border border-white ms-8 px-6 py-2 text-white font-bold bg-transparent hover:bg-transparent'>Dashboard</Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-56">
+                                        {/* <DropdownMenuLabel>Appearance</DropdownMenuLabel> */}
+                                        <DropdownMenuCheckboxItem
+                                       
+                                        >
+                                        <Link to='/dashboard/profile'>Profile</Link>
+                                        </DropdownMenuCheckboxItem>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuCheckboxItem
+                                        onClick={handleLogout}
+                                        >
+                                        Logout
+                                        </DropdownMenuCheckboxItem>
+                                    </DropdownMenuContent>
+                                    </DropdownMenu>
+    
+                                </div> : <Link to='/login' className='border border-white ms-8 px-6 py-2 text-white font-bold'> Account</Link>
+                            }
                         </div>
                     </div>
                 </div>
