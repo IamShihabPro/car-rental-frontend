@@ -34,8 +34,8 @@ const CarsFilter: React.FC<TFilter> = ({
       <h3 className={`text-2xl font-semibold mb-6 ${theme?.isDarkMode === true ? 'bg-gray-800' : 'bg-white'}`}>Filter Cars</h3>
       <button
           onClick={clearFilters}
-          className={`w-full p-3 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-300 mb-4 ${
-            theme?.isDarkMode ? 'text-white bg-gray-700' : 'text-gray-800 bg-gray-200'
+          className={`w-full p-3 rounded-sm focus:outline-none focus:ring-2 transition-colors duration-300 mb-4 ${
+            theme?.isDarkMode ? 'text-white bg-gray-700 focus:ring-red-500' : 'text-gray-800 bg-gray-200 focus:ring-blue-500'
           }`}
         >
           Clear All
@@ -90,7 +90,7 @@ const CarsFilter: React.FC<TFilter> = ({
             className={`w-1/2 p-3 rounded-sm ${theme?.isDarkMode === true ? "bg-gray-700 text-white ": "bg-gray-200 text-gray-800"}`}
           />
         </div>
-        <p className="text-white mt-2">
+        <p className={`mt-2 ${theme?.isDarkMode === true ? " text-white ": " text-gray-800"}`}>
           Price Range: ${priceRange.min} - ${priceRange.max}
         </p>
       </div>
