@@ -17,8 +17,15 @@ const bookingApi = baseApi.injectEndpoints({
             }),
             providesTags: ['bookings']
         }),
+        getMyBookings: builder.query({
+            query: () =>({
+                method: 'GET',
+                url: 'bookings/my-bookings'
+            }),
+            providesTags: ['bookings']
+        }),
     }) 
 })
 
-export const {useAddBookingsMutation, useGetBookingsQuery} = bookingApi
+export const {useAddBookingsMutation, useGetBookingsQuery, useGetMyBookingsQuery} = bookingApi
 export default bookingApi

@@ -10,6 +10,7 @@ import Contact from "@/pages/Contact/Contact";
 import AddCars from "@/pages/Dashboard/AddCars/AddCars";
 import AllCars from "@/pages/Dashboard/AllCars/AllCars";
 import Dashboard from "@/pages/Dashboard/Dashboard/Dashboard";
+import MyBookings from "@/pages/Dashboard/MyBookings/MyBookings";
 import Profile from "@/pages/Dashboard/Profile/Profile";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/allcars',
                 element: <AllCars/>
+            },
+            {
+                path: '/dashboard/mybookings',
+                element: <MyBookings/>
             },
         ]
     }
