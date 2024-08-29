@@ -30,7 +30,14 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ['users'],
   }),
+    getSingleUserByEmail: builder.query({
+      query: (email) => ({
+          method: 'GET',
+          url: `auth/user/${email}` 
+      }),
+      providesTags: ['users'],
+  }),
   }),
 });
 
-export const { useSignupMutation, useLoginMutation, useGetAllUsersQuery, useGetSingleUserQuery } = userApi;
+export const { useSignupMutation, useLoginMutation, useGetAllUsersQuery, useGetSingleUserQuery, useGetSingleUserByEmailQuery } = userApi;
