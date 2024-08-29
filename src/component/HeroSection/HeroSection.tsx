@@ -25,7 +25,7 @@ const HeroSection = () => {
                     />
                 </div>
                 
-                <button className="mt-8 border text-white bg-transparent px-6 py-3 rounded-md text-lg font-semibold">
+                <button className="mt-8 border border-white text-white bg-transparent px-6 py-3 rounded-md text-lg font-semibold">
                     Book Now
                 </button>
             </div>

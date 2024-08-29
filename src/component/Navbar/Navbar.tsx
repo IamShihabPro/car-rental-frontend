@@ -1,5 +1,4 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { HiOutlineShoppingBag } from "react-icons/hi";
 import Hamburger from "hamburger-react";
 import { useState, useEffect } from "react";
 import logo from '../../assets/images/cars/car-logo.png'
@@ -14,6 +13,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout, selectCurrentUser } from "@/redux/feature/user/userSlice";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
  
 
 const Navbar = () => {
@@ -23,6 +25,7 @@ const Navbar = () => {
     const [visible, setVisible] = useState(true);
     const [navBg, setNavBg] = useState("bg-transparent");
     const dispatch = useAppDispatch()
+    const theme = useSelector((state: RootState) => state.theme);
 
     const handleLogout = () =>{
         dispatch(logout())
@@ -68,8 +71,8 @@ const Navbar = () => {
                                 <NavLink
                                     key={id}
                                     to={link}
-                                    className={`hover:scale-105 px-3 py-2 font-medium hover:border-b border-white translate-x-2 duration-150 rounded-none inline-block ${
-                                        location.pathname === link ? 'text-white' : 'text-white'}`}>
+                                    className={`hover:scale-105 px-3 py-2 hover:border-b border-white translate-x-2 duration-150 font-semibold rounded-none inline-block ${
+                                        location.pathname === link ? `${theme?.isDarkMode === true ? 'text-white' : 'text-blue-500'}` : 'text-slate-400'}`}>
                                     {title}
                                 </NavLink>
                             ))}
@@ -100,14 +103,11 @@ const Navbar = () => {
                                     </DropdownMenuContent>
                                     </DropdownMenu>
     
-                                </div> : <Link to='/login' className='border border-white px-6 py-2 text-white font-medium'> Account</Link>
+                                </div> : <Link to='/login' className={` px-6 py-2 font-medium ${theme?.isDarkMode === true ? 'text-white border border-white' : 'text-blue-600 border border-blue-500'}`}> Account</Link>
                             }
                             
                             
-                            <Link to="/cart" className="flex items-center text-white font-medium gap-2 border border-white px-6 py-2">
-                                <span>Cart</span>
-                                <HiOutlineShoppingBag className="w-6 h-6" />
-                            </Link>
+                            <ThemeToggle/>
                         </div>
                     </div>
 
@@ -123,9 +123,7 @@ const Navbar = () => {
 
                     <div className='block md:hidden lg:hidden'>
                         <div className='flex items-center gap-4'>
-                            <Link to="/cart" className="flex items-center px-4 text-white font-bold">
-                                <HiOutlineShoppingBag className="w-8 h-8" />
-                            </Link>
+                            <ThemeToggle/>
                         </div>
                     </div>
                 </div>

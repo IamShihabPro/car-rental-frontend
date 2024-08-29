@@ -3,7 +3,7 @@ import { baseApi } from "./api/baseApi";
 import userReducer from './feature/user/userSlice'
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-
+import themeReducer from './feature/theme/themeSlice'
 
 const persistUserConfig = {
   key: "user",
@@ -16,6 +16,7 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     user: persistedUserReducer,
+    theme: themeReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares().concat(baseApi.middleware),

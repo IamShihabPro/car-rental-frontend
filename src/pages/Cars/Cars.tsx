@@ -4,10 +4,14 @@ import { useGetCarsQuery } from '@/redux/feature/cars/carsApi';
 import { TCar } from '@/types/userTypes';
 import CarsCard from './CarsCard';
 import Loader from '@/component/Loader/Loader';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 const Cars: React.FC = () => {
   const { data, isLoading } = useGetCarsQuery(undefined);
   const cars = data?.data as TCar[] || [];
+
+  const theme = useSelector((state: RootState) => state.theme);
 
   const [brand, setBrand] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -41,9 +45,9 @@ const Cars: React.FC = () => {
   }
 
   return (
-    <section className="bg-gray-900 py-16">
+    <section className={`${theme?.isDarkMode === true ? 'bg-gray-900' : 'bg-white'} py-16`}>
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-extrabold text-center text-white mt-10 mb-12">
+        <h2 className={`text-4xl font-extrabold text-center mt-10 mb-12 ${theme?.isDarkMode === true ? 'text-white' : 'text-gray-800' }`}>
           Available Cars
         </h2>
         <div className="flex flex-col lg:flex-row gap-8">

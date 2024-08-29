@@ -7,7 +7,7 @@ interface CarsCardProps {
 }
 
 const CarsCard: React.FC<CarsCardProps> = ({ car }) => {
-  console.log(car)
+  // console.log(car)
   return (
     <Link to={`/cars/${car?._id}`} className="relative shadow-lg overflow-hidden group rounded-sm transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
       <img
