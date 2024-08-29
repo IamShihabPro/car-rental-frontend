@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useGetSingleCarQuery } from '@/redux/feature/cars/carsApi';
 import Loader from '@/component/Loader/Loader';
 import { useAddBookingsMutation } from '@/redux/feature/booking/bookingApi';
@@ -17,8 +17,8 @@ const CarDetails: React.FC = () => {
   const [addBookings] = useAddBookingsMutation()
 
   const car = data?.data;
-  // console.log(car)
 
+  // onClick={() => handleAddBookings(car)}
   const handleAddBookings = async (carInfo: any) => {
     console.log(carInfo);
   
@@ -61,7 +61,7 @@ const CarDetails: React.FC = () => {
   }
 
   return (
-    <section className="bg-gray-900 py-16">
+    <section className="bg-gray-900 min-h-screen py-16">
       <div className="container mx-auto px-4 mt-20">
         <div className="flex flex-col md:flex-row gap-10">
           {/* Car Image */}
@@ -110,9 +110,9 @@ const CarDetails: React.FC = () => {
               <p className="text-3xl font-bold text-blue-400">${car.pricePerHour.toFixed(2)}</p>
             </div>
 
-            <button onClick={() => handleAddBookings(car)} className="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-sm shadow-lg hover:bg-blue-600 transition-transform duration-300 hover:scale-105">
+            <Link to={`/cars/${car?._id}/booking`} className="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-sm shadow-lg hover:bg-blue-600 transition-transform duration-300 hover:scale-105">
               Book Now
-            </button>
+            </Link>
           </div>
         </div>
       </div>

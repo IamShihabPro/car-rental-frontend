@@ -41,9 +41,8 @@ const AllCars = () => {
                     if (res?.success) {
                         toast.success(res?.message);
                     }
-                } catch (error) {
-                    toast.error("Failed to delete the car. Please try again.");
-                    console.error(error);
+                } catch (error: any) {
+                    toast.error(error?.data?.message);
                 }
             }
         }
@@ -56,9 +55,8 @@ const AllCars = () => {
                 toast.success("Car updated successfully!");
                 setModalOpen(false);
             }
-        } catch (error) {
-            toast.error("Failed to update the car. Please try again.");
-            console.error(error);
+        } catch (error: any) {
+            toast.error(error?.data?.message);
         }
     };
 

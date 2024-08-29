@@ -1,5 +1,10 @@
+import { useAddBookingsMutation } from '@/redux/feature/booking/bookingApi';
+import { useGetSingleCarQuery } from '@/redux/feature/cars/carsApi';
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import Loader from '../Loader/Loader';
+import { toast } from 'sonner';
 
 type BookingFormInputs = {
   idType: 'nid' | 'passport';
@@ -10,15 +15,64 @@ type BookingFormInputs = {
   childSeat: boolean;
 };
 
+type TBooking = {
+  idType: 'nid' | 'passport';
+  idNumber: string;
+  drivingLicense: string;
+  paymentMethod: string;
+  gps: boolean;
+  childSeat: boolean;
+  carId: string;
+  date: string;
+  startTime: string;
+};
+
+
 const BookingForm: React.FC = () => {
+  const { id } = useParams();
+  const { data, isLoading, isError } = useGetSingleCarQuery(id as string);
+  const [addBookings] = useAddBookingsMutation()
+
+  const car = data?.data;
+
   const { register, handleSubmit, formState: { errors } } = useForm<BookingFormInputs>();
 
-  const onSubmit: SubmitHandler<BookingFormInputs> = (data) => {
-    console.log('Form submitted:', data);
+  const onSubmit: SubmitHandler<BookingFormInputs> = async (data) => {
+
+    const currentDate = new Date();
+  
+    // Format the date as "YYYY-MM-DD"
+    const formattedDate = currentDate.toISOString().split('T')[0];
+  
+    // Format the time as "HH:MM"
+    const formattedTime = currentDate.toTimeString().slice(0, 5);
+
+    const bookingData:TBooking  = {...data, carId: car?._id, date: formattedDate, startTime: formattedTime, }
+    try {
+      const res = await addBookings(bookingData).unwrap();
+      if (res?.success) {
+        toast.success(res?.message);
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
+    
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError || !car) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-900 text-white">
+        <p>Failed to load car details. Please try again later.</p>
+      </div>
+    );
+  }
+
   return (
-    <section className="bg-gray-900 h-[100vh] py-16 flex items-center">
+    <section className="bg-gray-900 min-h-screen py-16 flex items-center">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-white text-center my-12">Book Your Ride</h2>
         <form
@@ -68,9 +122,9 @@ const BookingForm: React.FC = () => {
                 {...register('paymentMethod', { required: 'Payment Method is required' })}
                 className="p-3 rounded bg-gray-700 text-white outline-none focus:ring-2 focus:ring-blue-500 hover:bg-gray-600 transition-all"
               >
-                <option value="creditCard">Credit Card</option>
-                <option value="debitCard">Debit Card</option>
-                <option value="paypal">PayPal</option>
+                <option value="sslCommerz">SSL Commerz</option>
+                <option value="aamarPay ">Aamar Pay </option>
+                <option value="stripe">Stripe</option>
               </select>
               {errors.paymentMethod && <span className="text-red-500 text-sm mt-2">{errors.paymentMethod.message}</span>}
             </div>
@@ -100,6 +154,7 @@ const BookingForm: React.FC = () => {
           </div>
 
           <button
+            // onClick={() => handleAddBookings(car)}
             type="submit"
             className="w-full py-4 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-blue-500 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
           >

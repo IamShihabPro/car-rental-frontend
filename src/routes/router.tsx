@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
                 element: <TermsAndConditions/>
             },
             {
-                path: '/booking',
+                path: '/cars/:id/booking',
                 element: <BookingForm/>
             },
         ]
