@@ -7,6 +7,7 @@ const navItems = [
     { id: 'profile', icon: <FaUser className="mr-3 text-xl" />, label: 'Profile', link: '/dashboard/profile' },
     { id: 'addcars', icon: <TbCarSuv className="mr-3 text-xl" />, label: 'Add Cars', link: '/dashboard/addcars' },
     { id: 'allcars', icon: <FaCarSide className="mr-3 text-xl" />, label: 'All Cars', link: '/dashboard/allcars' },
+    { id: 'allbookings', icon: <FaCog className="mr-3 text-xl" />, label: 'All Bookings', link: '/dashboard/allbookings' },
     { id: 'mybookings', icon: <FaCog className="mr-3 text-xl" />, label: 'My Bookings', link: '/dashboard/mybookings' },
     { id: 'home', icon: <FaHome className="mr-3 text-xl" />, label: 'Home', link: '/' },
 ];
