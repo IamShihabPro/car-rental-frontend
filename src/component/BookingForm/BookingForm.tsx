@@ -20,8 +20,6 @@ type TBooking = {
   idNumber: string;
   drivingLicense: string;
   paymentMethod: string;
-  gps: boolean;
-  childSeat: boolean;
   carId: string;
   date: string;
   startTime: string;
@@ -127,29 +125,6 @@ const BookingForm: React.FC = () => {
                 <option value="stripe">Stripe</option>
               </select>
               {errors.paymentMethod && <span className="text-red-500 text-sm mt-2">{errors.paymentMethod.message}</span>}
-            </div>
-
-            {/* Additional Options */}
-            <div className="flex flex-col">
-              <label className="text-white text-lg font-semibold mb-2">Additional Options</label>
-              <div className="flex items-center space-x-4 mt-2">
-                <label className="flex items-center text-white">
-                  <input
-                    type="checkbox"
-                    {...register('gps')}
-                    className="mr-2 bg-gray-700 text-blue-500 focus:ring-2 focus:ring-blue-500 rounded-md"
-                  />
-                  GPS
-                </label>
-                <label className="flex items-center text-white">
-                  <input
-                    type="checkbox"
-                    {...register('childSeat')}
-                    className="mr-2 bg-gray-700 text-blue-500 focus:ring-2 focus:ring-blue-500 rounded-md"
-                  />
-                  Child Seat
-                </label>
-              </div>
             </div>
           </div>
 
