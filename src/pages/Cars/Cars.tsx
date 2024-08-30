@@ -6,7 +6,6 @@ import CarsCard from './CarsCard';
 import Loader from '@/component/Loader/Loader';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-import EmptyPage from '@/component/Loader/EmptyPage';
 
 const Cars: React.FC = () => {
   const { data, isLoading } = useGetCarsQuery(undefined);
@@ -40,8 +39,8 @@ const Cars: React.FC = () => {
     });
 
     return sortedCars.filter((car) => {
-      const matchesBrand = brand === '' || car.brand === brand;
-      const matchesSearchTerm = searchTerm === '' || car.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesBrand = !brand || car.brand === brand;
+      const matchesSearchTerm = !searchTerm || car.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPriceRange = car.pricePerHour >= priceRange.min && car.pricePerHour <= priceRange.max;
       const matchesElectric = !isElectric || car.isElectric;
       const matchesGPS = !gps || car.gps;
@@ -94,7 +93,9 @@ const Cars: React.FC = () => {
                 <CarsCard key={index} car={car} />
               ))
             ) : (
-              <EmptyPage />
+              <div className="text-white text-2xl mt-8 text-center col-span-full">
+                No Cars Available.
+              </div>
             )}
           </div>
         </div>
