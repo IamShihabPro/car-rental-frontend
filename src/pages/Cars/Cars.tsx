@@ -6,6 +6,7 @@ import CarsCard from './CarsCard';
 import Loader from '@/component/Loader/Loader';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import EmptyPage from '@/component/Loader/EmptyPage';
 
 const Cars: React.FC = () => {
   const { data, isLoading } = useGetCarsQuery(undefined);
@@ -46,7 +47,10 @@ const Cars: React.FC = () => {
 
   return (
     <section className={`${theme?.isDarkMode === true ? 'bg-gray-900' : 'bg-white'} py-16`}>
-      <div className="container mx-auto px-4">
+      {
+        filteredCars.length > 0 ? <>
+        
+        <div className="container mx-auto px-4">
         <h2 className={`text-4xl font-extrabold text-center mt-10 mb-12 ${theme?.isDarkMode === true ? 'text-white' : 'text-gray-800' }`}>
           Available Cars
         </h2>
@@ -69,18 +73,14 @@ const Cars: React.FC = () => {
 
           {/* Cars Listing Section */}
           <div className="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredCars.length === 0 ? (
-              <div className="text-white text-center text-4xl font-bold col-span-full">
-                No cars available.
-              </div>
-            ) : (
-              filteredCars.map((car, index) => (
+            { filteredCars.map((car, index) => (
                 <CarsCard key={index} car={car} />
-              ))
-            )}
+            ))}
           </div>
         </div>
       </div>
+        </> : <> <EmptyPage/> </>
+      }
     </section>
   );
 };
