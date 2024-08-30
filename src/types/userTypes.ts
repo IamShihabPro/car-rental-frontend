@@ -20,6 +20,8 @@ export interface TCar {
   color: string;
   image: string;
   isElectric: boolean;
+  gps: boolean;
+  childSeat: boolean;
   status: TCarStatus; 
   features: string[];
   pricePerHour: number;

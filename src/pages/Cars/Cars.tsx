@@ -10,7 +10,7 @@ import EmptyPage from '@/component/Loader/EmptyPage';
 
 const Cars: React.FC = () => {
   const { data, isLoading } = useGetCarsQuery(undefined);
-  const cars = data?.data as TCar[] || [];
+  const cars = (data?.data as TCar[]) || [];
 
   const theme = useSelector((state: RootState) => state.theme);
 
@@ -18,12 +18,18 @@ const Cars: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
   const [sortOrder, setSortOrder] = useState<string>('default');
+  const [isElectric, setIsElectric] = useState<boolean>(false);
+  const [gps, setGps] = useState<boolean>(false);
+  const [childSeat, setChildSeat] = useState<boolean>(false);
 
   const clearFilters = () => {
     setBrand('');
     setSearchTerm('');
     setPriceRange({ min: 0, max: 100 });
     setSortOrder('default');
+    setIsElectric(false);
+    setGps(false);
+    setChildSeat(false);
   };
 
   const filteredCars = useMemo(() => {
@@ -37,21 +43,26 @@ const Cars: React.FC = () => {
       const matchesBrand = brand === '' || car.brand === brand;
       const matchesSearchTerm = searchTerm === '' || car.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPriceRange = car.pricePerHour >= priceRange.min && car.pricePerHour <= priceRange.max;
-      return matchesBrand && matchesSearchTerm && matchesPriceRange;
+      const matchesElectric = !isElectric || car.isElectric;
+      const matchesGPS = !gps || car.gps;
+      const matchesChildSeat = !childSeat || car.childSeat;
+
+      return matchesBrand && matchesSearchTerm && matchesPriceRange && matchesElectric && matchesGPS && matchesChildSeat;
     });
-  }, [cars, brand, searchTerm, priceRange, sortOrder]);
+  }, [cars, brand, searchTerm, priceRange, sortOrder, isElectric, gps, childSeat]);
 
   if (isLoading) {
     return <Loader />;
   }
 
   return (
-    <section className={`${theme?.isDarkMode === true ? 'bg-gray-900' : 'bg-white'} py-16`}>
-      {
-        filteredCars.length > 0 ? <>
-        
-        <div className="container mx-auto px-4">
-        <h2 className={`text-4xl font-extrabold text-center mt-10 mb-12 ${theme?.isDarkMode === true ? 'text-white' : 'text-gray-800' }`}>
+    <section className={`${theme?.isDarkMode ? 'bg-gray-900' : 'bg-white'} py-16`}>
+      <div className="container mx-auto px-4">
+        <h2
+          className={`text-4xl font-extrabold text-center mt-10 mb-12 ${
+            theme?.isDarkMode ? 'text-white' : 'text-gray-800'
+          }`}
+        >
           Available Cars
         </h2>
         <div className="flex flex-col lg:flex-row gap-8">
@@ -68,19 +79,26 @@ const Cars: React.FC = () => {
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
               clearFilters={clearFilters}
+              isElectric={isElectric}
+              setIsElectric={setIsElectric}
+              gps={gps}
+              setGps={setGps}
+              childSeat={childSeat}
+              setChildSeat={setChildSeat}
             />
           </div>
-
           {/* Cars Listing Section */}
           <div className="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            { filteredCars.map((car, index) => (
+            {filteredCars.length > 0 ? (
+              filteredCars.map((car, index) => (
                 <CarsCard key={index} car={car} />
-            ))}
+              ))
+            ) : (
+              <EmptyPage />
+            )}
           </div>
         </div>
       </div>
-        </> : <> <EmptyPage/> </>
-      }
     </section>
   );
 };

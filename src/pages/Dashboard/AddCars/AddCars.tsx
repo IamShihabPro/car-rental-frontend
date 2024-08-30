@@ -104,13 +104,31 @@ const AddCars: React.FC = () => {
                     {errors.description && <span className="text-red-500 text-sm">{errors.description.message}</span>}
                 </div>
 
-                <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-700">Electric</label>
-                    <input
-                        type="checkbox"
-                        {...register('isElectric')}
-                        className="mr-2 leading-tight"
-                    />
+                <div className='flex flex-row justify-around items-center'>
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-700">Electric</label>
+                        <input
+                            type="checkbox"
+                            {...register('isElectric')}
+                            className="mr-2 leading-tight"
+                        />
+                    </div>
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-700">GPS</label>
+                        <input
+                            type="checkbox"
+                            {...register('gps')}
+                            className="mr-2 leading-tight"
+                        />
+                    </div>
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-700">Child Seat</label>
+                        <input
+                            type="checkbox"
+                            {...register('childSeat')}
+                            className="mr-2 leading-tight"
+                        />
+                    </div>
                 </div>
 
                 <div>
