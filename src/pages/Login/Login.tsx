@@ -6,6 +6,7 @@ import { verifyToken } from "@/utils/verifyToken";
 import { setUser, TUser } from "@/redux/feature/user/userSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 interface IFormData {
     email: string;
@@ -22,6 +23,8 @@ const Login: React.FC = () => {
         password: ''
     });
 
+    const [showPassword, setShowPassword] = useState(false);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -33,17 +36,20 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
-       
         try {
             const res = await login(formData).unwrap();
             const user = verifyToken(res.token) as TUser;
            
             dispatch(setUser({ user: user, token: res.token }));
             navigate('/')
-            toast.success('User Login Succesful')
+            toast.success('User Login Successful')
           } catch (error: any) {
             toast.error(error?.data?.message)
           }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -53,11 +59,11 @@ const Login: React.FC = () => {
         >
             <div className="w-full max-w-xl mx-auto shadow-lg p-10 backdrop-blur-lg bg-white/20 rounded-lg">
                 <h3 className="text-xl font-bold text-center mb-10 text-white">
-                Hello <span className="text-blue-500">Welcome</span>
+                    Hello <span className="text-blue-500">Welcome</span>
                 </h3>
 
                 <form onSubmit={handleSubmit} className="py-4 px-3">
-                    <div className="mb-5">
+                    <div className="mb-5 relative">
                         <input 
                             type="email" 
                             name="email" 
@@ -68,9 +74,9 @@ const Login: React.FC = () => {
                             required
                         />
                     </div>
-                    <div className="mb-5">
+                    <div className="mb-5 relative">
                         <input 
-                            type="password" 
+                            type={showPassword ? "text" : "password"} 
                             name="password" 
                             value={formData.password} 
                             onChange={handleInputChange} 
@@ -78,9 +84,19 @@ const Login: React.FC = () => {
                             className="w-full px-4 py-3 border-b border-solid border-white focus:outline-none focus:border-b-blue-600 text-md leading-7 text-white bg-transparent"
                             required
                         />
+                        <div 
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                            onClick={togglePasswordVisibility}
+                        >
+                            {showPassword ? (
+                                <AiFillEyeInvisible className="text-white h-5 w-5" />
+                            ) : (
+                                <AiFillEye className="text-white h-5 w-5" />
+                            )}
+                        </div>
                     </div>
                     <div>
-                        <button type="submit" className="w-full mt-4 bg-transparent border px-4 py-2 text-white rounded-sm">Login</button>
+                        <button type="submit" className="w-full mt-4 bg-transparent border border-white px-4 py-2 text-white rounded-sm">Login</button>
                     </div>
 
                     <p className="text-white text-center mt-4">

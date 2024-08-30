@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Bg from '../../assets/images/cars/bmw-5.webp';
 import { TSignup } from "@/types/userTypes";
 import { useSignupMutation } from "@/redux/feature/user/userApi";
 import { toast } from "sonner";
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import Bg from '../../assets/images/cars/bmw-5.webp';
 
 const Signup: React.FC = () => {
-    const [passwordVerify, setPasswordVerify] = useState('')
-    const [signup] = useSignupMutation()
-    const navigate = useNavigate()
+    const [passwordVerify, setPasswordVerify] = useState('');
+    const [signup] = useSignupMutation();
+    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const [formData, setFormData] = useState<TSignup>({
         name: '',
@@ -24,9 +27,9 @@ const Signup: React.FC = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
-    
+
         if (type === 'checkbox') {
-            const { checked } = e.target as HTMLInputElement
+            const { checked } = e.target as HTMLInputElement;
             setFormData((prev) => ({
                 ...prev,
                 [name]: checked
@@ -38,27 +41,25 @@ const Signup: React.FC = () => {
             }));
         }
     };
-    
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if( formData.password === formData.confirmPassword){
-            
-            const {name, email, password, role, address, phone, image} = formData
-            const datas = {name, email, password, role, address, phone, image}
-                       
-            
+        if (formData.password === formData.confirmPassword) {
+            const { name, email, password, role, address, phone, image } = formData;
+            const datas = { name, email, password, role, address, phone, image };
+
             try {
                 const res = await signup(datas).unwrap();
                 if (res?.success) {
-                  toast.success(res?.message);
-                  navigate('/login')
+                    toast.success(res?.message);
+                    navigate('/login');
                 }
-              } catch (error: any) {
-                console.log(error)
-                toast.error(error?.data?.message)
-              }
-        }else{
-            setPasswordVerify("Password do not match")
+            } catch (error: any) {
+                console.log(error);
+                toast.error(error?.data?.message);
+            }
+        } else {
+            setPasswordVerify("Passwords do not match");
         }
     };
 
@@ -75,7 +76,7 @@ const Signup: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="col-span-1">
-                            <label className="text-white" htmlFor="">Name</label>
+                            <label className="text-white">Name</label>
                             <input 
                                 type="text" 
                                 name="name" 
@@ -87,7 +88,7 @@ const Signup: React.FC = () => {
                             />
                         </div>
                         <div className="col-span-1">
-                            <label className="text-white" htmlFor="">Email</label>
+                            <label className="text-white">Email</label>
                             <input 
                                 type="email" 
                                 name="email" 
@@ -98,10 +99,10 @@ const Signup: React.FC = () => {
                                 required
                             />
                         </div>
-                        <div className="col-span-1">
-                            <label className="text-white" htmlFor="">Password</label>
+                        <div className="col-span-1 relative">
+                            <label className="text-white">Password</label>
                             <input 
-                                type="password" 
+                                type={showPassword ? 'text' : 'password'} 
                                 name="password" 
                                 value={formData.password} 
                                 onChange={handleInputChange} 
@@ -109,11 +110,17 @@ const Signup: React.FC = () => {
                                 className="w-full px-4 py-3 border border-transparent rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white bg-gray-800 transition duration-300 ease-in-out transform hover:scale-105"
                                 required
                             />
+                            <div 
+                                className="absolute inset-y-0 top-3 right-3 flex items-center cursor-pointer"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <AiFillEyeInvisible className="text-gray-400 h-5 w-5"/> : <AiFillEye className="text-gray-400 h-5 w-5"/>}
+                            </div>
                         </div>
-                        <div className="col-span-1">
-                        <label className="text-white" htmlFor="">Confirm Password</label>
+                        <div className="col-span-1 relative">
+                            <label className="text-white">Confirm Password</label>
                             <input 
-                                type="password" 
+                                type={showConfirmPassword ? 'text' : 'password'} 
                                 name="confirmPassword" 
                                 value={formData.confirmPassword} 
                                 onChange={handleInputChange} 
@@ -121,10 +128,16 @@ const Signup: React.FC = () => {
                                 className="w-full px-4 py-3 border border-transparent rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white bg-gray-800 transition duration-300 ease-in-out transform hover:scale-105"
                                 required
                             />
+                            <div 
+                                className="absolute inset-y-0 top-3 right-3 flex items-center cursor-pointer"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            >
+                                {showConfirmPassword ? <AiFillEyeInvisible className="text-gray-400 h-5 w-5"/> : <AiFillEye className="text-gray-400 h-5 w-5"/>}
+                            </div>
                             <p className="text-red-500 mt-1">{passwordVerify}</p>
                         </div>
                         <div className="col-span-1">
-                        <label className="text-white" htmlFor="">Profile Image</label>
+                            <label className="text-white">Profile Image</label>
                             <input 
                                 type="text" 
                                 name="image" 
@@ -136,7 +149,7 @@ const Signup: React.FC = () => {
                             />
                         </div>
                         <div className="col-span-1">
-                        <label className="text-white" htmlFor="">Role</label>
+                            <label className="text-white">Role</label>
                             <select 
                                 name="role" 
                                 value={formData.role} 
@@ -150,7 +163,7 @@ const Signup: React.FC = () => {
                             </select>
                         </div>
                         <div className="col-span-1">
-                        <label className="text-white" htmlFor="">Phone Number</label>
+                            <label className="text-white">Phone Number</label>
                             <input 
                                 type="tel" 
                                 name="phone" 
@@ -162,7 +175,7 @@ const Signup: React.FC = () => {
                             />
                         </div>
                         <div className="col-span-1">
-                        <label className="text-white" htmlFor="">Address</label>
+                            <label className="text-white">Address</label>
                             <input 
                                 type="text" 
                                 name="address" 
@@ -181,35 +194,34 @@ const Signup: React.FC = () => {
                             name="termsAccepted" 
                             checked={formData.termsAccepted} 
                             onChange={handleInputChange} 
-                            className="h-5 w-5 text-blue-600 focus:ring-blue-500 focus:ring-2 rounded"
+                            className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                             required
                         />
-                        <label className="text-white">
-                            I agree to the 
-                            <Link 
-                                to="/terms" 
-                                className="text-blue-500 underline ml-1" 
-                            >
-                                Terms & Conditions
+                        <span className="text-gray-200">
+                            I accept the{' '}
+                            <Link to="/terms" className="text-blue-400 hover:underline">
+                                Terms and Conditions
                             </Link>
-                        </label>
+                        </span>
                     </div>
 
-                    <div className="mt-6">
-                        <button 
-                            type="submit" 
-                            className="w-full bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded-lg text-white font-semibold shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-                        >
-                            Sign Up
-                        </button>
-                    </div>
-
-                    <p className="text-gray-400 text-center mt-6">
-                        Already have an account? 
-                        <Link className="ml-1 text-blue-500 font-bold" to='/login'> Login </Link>
-                    </p> 
+                    <button 
+                        type="submit" 
+                        className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Sign Up
+                    </button>
                 </form>
-            </div>    
+
+                <div className="mt-6 text-center">
+                    <p className="text-gray-200">
+                        Already have an account?{' '}
+                        <Link to="/login" className="text-blue-400 hover:underline">
+                            Log In
+                        </Link>
+                    </p>
+                </div>
+            </div>
         </div>
     );
 };
