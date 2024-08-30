@@ -8,6 +8,7 @@ import CarDetails from "@/pages/Cars/CarDetails";
 import Cars from "@/pages/Cars/Cars";
 import Contact from "@/pages/Contact/Contact";
 import AddCars from "@/pages/Dashboard/AddCars/AddCars";
+import AllBookings from "@/pages/Dashboard/AllBookings/AllBookings";
 import AllCars from "@/pages/Dashboard/AllCars/AllCars";
 import Dashboard from "@/pages/Dashboard/Dashboard/Dashboard";
 import MyBookings from "@/pages/Dashboard/MyBookings/MyBookings";
@@ -76,6 +77,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/allcars',
                 element: <AllCars/>
+            },
+            {
+                path: '/dashboard/allbookings',
+                element: <AllBookings/>
             },
             {
                 path: '/dashboard/mybookings',
