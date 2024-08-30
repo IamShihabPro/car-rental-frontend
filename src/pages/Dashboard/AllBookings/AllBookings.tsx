@@ -1,7 +1,8 @@
 import EmptyComponent from "@/component/Loader/EmptyComponent";
 import Loader from "@/component/Loader/Loader";
-import { useGetBookingsQuery } from "@/redux/feature/booking/bookingApi";
+import { useGetBookingsQuery, useUpdateBookingMutation } from "@/redux/feature/booking/bookingApi";
 import { TCar } from "@/types/userTypes";
+import { toast } from "sonner";
 
 type TUser = {
     _id: string;
@@ -27,7 +28,20 @@ type TBooking = {
 const AllBookings: React.FC = () => {
 
     const { data, isLoading, isError } = useGetBookingsQuery(undefined);
+    const [updateBooking] = useUpdateBookingMutation()
     const bookings = data?.data as TBooking[] || [];
+
+    const handleConfirmBooking = async (booking: TBooking) => {
+        try {
+            const res = await updateBooking({ id: booking._id, isConfirm: true }).unwrap();
+            console.log(res);
+            if (res?.success) {
+                toast.success(res?.message);
+            }
+        } catch (error: any) {
+            toast.error(error?.data?.message);
+        }
+    };
 
     if (isLoading) {
         return <Loader />;
@@ -84,7 +98,7 @@ const AllBookings: React.FC = () => {
                                 </td>
                                <div className="flex flex-row">
                                     <td className="py-3 px-4">
-                                    <button className="text-white bg-green-500 px-4 py-2"> Confirm</button>
+                                    <button onClick={() => handleConfirmBooking(booking)} className="text-white bg-green-500 px-4 py-2"> Confirm</button>
                                     </td>
                                     <td className="py-3 px-4">
                                     <button className="text-white bg-red-500 px-4 py-2"> Delete</button>

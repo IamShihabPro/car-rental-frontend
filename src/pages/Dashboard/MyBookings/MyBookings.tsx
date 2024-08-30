@@ -36,11 +36,10 @@ const MyBookings: React.FC = () => {
         try {
           const res = await cancelBookings(id).unwrap();
           if (res?.success) {
-            toast.success(res?.message || "Booking canceled successfully.");
+            toast.success(res?.data?.message || "Booking canceled successfully.");
           }
-        } catch (error) {
-          console.error("Failed to cancel booking:", error);
-          toast.error("Failed to cancel booking. Please try again.");
+        } catch (error: any) {
+            toast.error(error?.data?.message);
         }
       };
 
