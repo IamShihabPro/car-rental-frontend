@@ -82,7 +82,7 @@ const MyBookings: React.FC = () => {
                                 <td className="py-3 px-4 border font-semibold text-gray-600 uppercase">{booking.idType}</td>
                                 <td className="py-3 px-4 border font-semibold text-gray-600">{booking.idNumber}</td>
                                 <td className="py-3 px-4 border font-semibold text-gray-600">{booking.drivingLicense}</td>
-                                <td className={`py-3 px-4 border font-semibold ${booking.isConfirm ? 'text-green-400' : 'text-red-400'} `}>{booking.isConfirm === true ? 'Yes' : 'No'}</td>
+                                <td className={`py-3 px-4 border font-semibold ${booking.isConfirm ? 'text-green-400' : 'text-red-400'} `}>{booking.isConfirm === true ? 'Confirm' : 'Not Confirm'}</td>
                                 <td className="py-3 px-4 border font-semibold text-gray-700">{booking.paymentMethod}</td>
                                 <td className="py-3 px-4 border font-semibold text-gray-700">
                                     {new Date(booking.date).toLocaleDateString()}
