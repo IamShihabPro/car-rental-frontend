@@ -16,8 +16,12 @@ type TBooking = {
   carId: string;
   date: string;
   startTime: string;
+  endTime: string;
+  totalCost: number;
   isCancel: boolean;
   isConfirm: boolean;
+  isCarReturn: boolean;
+  isPaid: boolean;
   isDelete: boolean;
 };
 
@@ -70,6 +74,8 @@ const MyBookings: React.FC = () => {
                             <th className="py-3 px-4 border">Payment Method</th>
                             <th className="py-3 px-4 border">Date</th>
                             <th className="py-3 px-4 border">Start Time</th>
+                            <th className="py-3 px-4 border">End Time</th>
+                            <th className="py-3 px-4 border">Total Cost</th>
                             <th className="py-3 px-4 border">Action</th>
                         </tr>
                     </thead>
@@ -90,9 +96,33 @@ const MyBookings: React.FC = () => {
                                 <td className="py-3 px-4 border font-semibold text-gray-700">
                                     {booking.startTime}
                                 </td>
-                                <td className="py-3 px-4 border">
-                                   <button onClick={() => handleCancel(booking?._id)} className="text-white bg-gray-800 px-4 py-2"> Cancel</button>
+                                <td className="py-3 px-4 border font-semibold text-gray-700">
+                                    {booking.endTime === null ? 'Not issued yet' :  `${booking.endTime}`}
                                 </td>
+                                <td className="py-3 px-4 border font-semibold text-gray-700">
+                                    {booking?.totalCost}
+                                </td>
+                                <div className="flex flex-row justify-center items-center">
+
+                                   {
+                                    booking?.isCarReturn === true ? <p className="text-blue-500">Car Returned</p> :  
+                                    <td className="py-3 px-4">
+                                        <button onClick={() => handleCancel(booking?._id)} className="text-white bg-red-500 px-4 py-2"> Cancel</button>
+                                    </td>
+                                   }
+
+                                   {
+                                        booking?.isConfirm === true ? 
+                                        <>
+                                            {
+                                                booking?.isPaid === true ? <p className="text-yellow-500">Paid</p> :  
+                                                <td className="py-3 px-4">
+                                                    <button className="text-white bg-green-500 px-4 py-2"> Pay Now</button>
+                                                </td>
+                                            }
+                                        </> : ""
+                                   }
+                                </div>
                             </tr>
                         ))}
                     </tbody>
