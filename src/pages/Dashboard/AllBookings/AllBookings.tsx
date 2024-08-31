@@ -1,6 +1,7 @@
 import EmptyComponent from "@/component/Loader/EmptyComponent";
 import Loader from "@/component/Loader/Loader";
 import { useGetBookingsQuery, useUpdateBookingMutation } from "@/redux/feature/booking/bookingApi";
+import { useReturnCarMutation } from "@/redux/feature/cars/carsApi";
 import { TCar } from "@/types/userTypes";
 import { toast } from "sonner";
 
@@ -21,6 +22,8 @@ type TBooking = {
   startTime: string;
   isCancel: boolean;
   isConfirm: boolean;
+  isCarReturn: boolean;
+  isPaid: boolean;
   isDelete: boolean;
   user: TUser;
 };
@@ -29,6 +32,8 @@ const AllBookings: React.FC = () => {
 
     const { data, isLoading, isError } = useGetBookingsQuery(undefined);
     const [updateBooking] = useUpdateBookingMutation()
+    const [returnCar] = useReturnCarMutation()
+
     const bookings = data?.data as TBooking[] || [];
 
     const handleConfirmBooking = async (booking: TBooking) => {
@@ -42,6 +47,29 @@ const AllBookings: React.FC = () => {
             toast.error(error?.data?.message);
         }
     };
+
+    const handleReturnCar = async (booking: TBooking) => {
+        console.log(booking)
+
+        const currentDate = new Date();
+        const formattedTime = currentDate.toTimeString().slice(0, 5);
+
+        const bookingData = {
+            bookingId: booking?._id, 
+            endTime: formattedTime 
+        };
+    
+        try {
+            const res = await returnCar(bookingData).unwrap();
+            console.log(res);
+            if (res?.success) {
+                toast.success(res?.message);
+            }
+        } catch (error: any) {
+            toast.error(error?.data?.message);
+        }
+    };
+    
 
     if (isLoading) {
         return <Loader />;
@@ -97,11 +125,29 @@ const AllBookings: React.FC = () => {
                                     {booking.startTime}
                                 </td>
                                <div className="flex flex-row">
+                                    {
+                                        booking.isConfirm === true ? 
+                                        <div className="flex flex-row justify-center items-center gap-2">
+                                            <p className="text-yellow-500 py-3 px-4">Confirmed</p> 
+                                            {
+                                                booking.isCarReturn === true ? 
+                                                <p className="text-green-500 py-3 px-4">Returned</p>
+                                                :
+                                                <td onClick={() => handleReturnCar(booking)} className="py-3 px-4">
+                                                    <button className="text-white bg-blue-500 px-4 py-2"> Return</button>
+                                                </td>
+                                            }
+                                           
+                                        </div>
+                                        
+                                        : 
+                                        <td className="py-3 px-4">
+                                            <button onClick={() => handleConfirmBooking(booking)} className="text-white bg-green-500 px-4 py-2"> Confirm</button>
+                                        </td> 
+                                    }
+
                                     <td className="py-3 px-4">
-                                    <button onClick={() => handleConfirmBooking(booking)} className="text-white bg-green-500 px-4 py-2"> Confirm</button>
-                                    </td>
-                                    <td className="py-3 px-4">
-                                    <button className="text-white bg-red-500 px-4 py-2"> Delete</button>
+                                        <button className="text-white bg-red-500 px-4 py-2"> Delete</button>
                                     </td>
                                </div>
                             </tr>
