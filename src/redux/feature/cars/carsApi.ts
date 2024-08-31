@@ -45,7 +45,7 @@ const carsApi = baseApi.injectEndpoints({
               url: 'cars/return',
               body: data
             }),
-            invalidatesTags: ['cars'],
+            invalidatesTags: ['cars', 'bookings'],
         }),
       
     })

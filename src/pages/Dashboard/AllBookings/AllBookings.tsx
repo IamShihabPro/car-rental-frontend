@@ -124,7 +124,7 @@ const AllBookings: React.FC = () => {
                                 <td className="py-3 px-4 border font-semibold text-gray-700">
                                     {booking.startTime}
                                 </td>
-                               <div className="flex flex-row">
+                               <div className="flex flex-row border">
                                     {
                                         booking.isConfirm === true ? 
                                         <div className="flex flex-row justify-center items-center gap-2">

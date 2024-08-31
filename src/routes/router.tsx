@@ -12,6 +12,7 @@ import AllBookings from "@/pages/Dashboard/AllBookings/AllBookings";
 import AllCars from "@/pages/Dashboard/AllCars/AllCars";
 import Dashboard from "@/pages/Dashboard/Dashboard/Dashboard";
 import MyBookings from "@/pages/Dashboard/MyBookings/MyBookings";
+import Payment from "@/pages/Dashboard/Payment/Payment";
 import Profile from "@/pages/Dashboard/Profile/Profile";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/mybookings',
                 element: <MyBookings/>
+            },
+            {
+                path: '/dashboard/mybookings/payment',
+                element: <Payment/>
             },
         ]
     }
