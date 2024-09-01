@@ -1,11 +1,13 @@
+import React, { useState, useEffect } from "react";
 import Loader from "@/component/Loader/Loader";
-import { useGetSingleUserByEmailQuery } from "@/redux/feature/user/userApi";
+import { useGetSingleUserByEmailQuery, useUpdateUserMutation } from "@/redux/feature/user/userApi";
 import { useCurrentToken } from "@/redux/feature/user/userSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
-import React from "react";
+import UpdateProfileModal from "@/component/UpdateProfileModal/UpdateProfileModal";
+import { toast } from "sonner";
 
-export type TSignup = {
+export type TProfile = {
     name: string;
     email: string;
     role: string;
@@ -14,7 +16,11 @@ export type TSignup = {
     image: string;
 };
 
+// Subset type for the form data
+export type TProfileUpdate = Pick<TProfile, 'name' | 'phone' | 'address' | 'image'>;
+
 const Profile: React.FC = () => {
+    const [updateUser] = useUpdateUserMutation()
     const token = useAppSelector(useCurrentToken);
     let user;
 
@@ -23,7 +29,50 @@ const Profile: React.FC = () => {
     }
 
     const { data, isLoading } = useGetSingleUserByEmailQuery(user?.email);
-    const userInfo = data?.data as TSignup;
+    const userInfo = data?.data as TProfile;
+
+    // console.log(data)
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState<TProfileUpdate>({
+        name: "",
+        phone: "",
+        address: "",
+        image: "",
+    });
+
+    // Set default values when userInfo is available
+    useEffect(() => {
+        if (userInfo) {
+            setFormData({
+                name: userInfo.name || "",
+                phone: userInfo.phone || "",
+                address: userInfo.address || "",
+                image: userInfo.image || "",
+            });
+        }
+    }, [userInfo]);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevData => ({ ...prevData, [name]: value }));
+    };
+
+    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log("Updated Profile Data:", formData);
+        try {
+            const res = await updateUser({id: data.data._id, ...formData}).unwrap();
+            if (res?.success) {
+                console.log(res)
+              toast.success(res?.message);
+            }
+          } catch (error: any) {
+            console.log(error)
+            console.error(error?.data?.message);
+          }
+        setIsModalOpen(false); 
+    };
 
     if (isLoading) {
         return <Loader />;
@@ -32,7 +81,7 @@ const Profile: React.FC = () => {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-900">
             <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
-                <div className="flex items-center p-6 bg-gradient-to-r from-blue-500 to-indigo-600">
+                <div className="flex items-center p-6 bg-gradient-to-r from-gray-500 to-indigo-500">
                     <img
                         src={userInfo?.image || "/default-avatar.png"}
                         alt={userInfo?.name}
@@ -44,6 +93,12 @@ const Profile: React.FC = () => {
                         <p className="mt-1 text-sm font-semibold">
                             Role: <span className="capitalize">{userInfo?.role}</span>
                         </p>
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="mt-4 py-2 px-4 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+                        >
+                            Edit Profile
+                        </button>
                     </div>
                 </div>
                 <div className="p-6">
@@ -60,6 +115,15 @@ const Profile: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Modal for updating profile */}
+            <UpdateProfileModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                formData={formData}
+                handleInputChange={handleInputChange}
+                handleSubmit={handleSubmit}
+            />
         </div>
     );
 };
