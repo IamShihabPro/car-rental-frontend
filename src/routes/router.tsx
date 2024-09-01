@@ -2,6 +2,8 @@ import App from "@/App";
 import BookingForm from "@/component/BookingForm/BookingForm";
 import ErrorPage from "@/component/ErrorPage/ErrorPage";
 import TermsAndConditions from "@/component/TermsAndConditions/TermsAndConditions";
+import AdminProtected from "@/layout/AdminProtected";
+import ProtectedRoute from "@/layout/ProtectedRoute";
 // import ProtectedRoute from "@/layout/ProtectedRoute";
 import About from "@/pages/About/About";
 import CarDetails from "@/pages/Cars/CarDetails";
@@ -65,23 +67,23 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard/>,
+        element: <ProtectedRoute> <Dashboard/> </ProtectedRoute>,
         children: [
-            {
-                path: 'addcars',
-                element: <AddCars/>
-            },
             {
                 path: '/dashboard/profile',
                 element: <Profile/>
             },
             {
+                path: 'addcars',
+                element: <AdminProtected> <AddCars/> </AdminProtected>
+            },
+            {
                 path: '/dashboard/allcars',
-                element: <AllCars/>
+                element: <AdminProtected> <AllCars/> </AdminProtected>
             },
             {
                 path: '/dashboard/allbookings',
-                element: <AllBookings/>
+                element: <AdminProtected> <AllBookings/> </AdminProtected>
             },
             {
                 path: '/dashboard/mybookings',
