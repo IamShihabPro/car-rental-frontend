@@ -94,9 +94,7 @@ const UpdateCarModal: React.FC<IUpdateCarModalProps> = ({ car, isOpen, onClose, 
                         <ImCross />
                     </button>
                 </div>
-
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Brand */}
                     <div>
                         <label className="block mb-2 text-sm font-medium text-gray-700">Brand</label>
                         <input
@@ -108,7 +106,6 @@ const UpdateCarModal: React.FC<IUpdateCarModalProps> = ({ car, isOpen, onClose, 
                         />
                     </div>
 
-                    {/* Name */}
                     <div>
                         <label className="block mb-2 text-sm font-medium text-gray-700">Name</label>
                         <input
@@ -120,25 +117,22 @@ const UpdateCarModal: React.FC<IUpdateCarModalProps> = ({ car, isOpen, onClose, 
                         />
                     </div>
 
-                    {/* Description */}
                     <div>
                         <label className="block mb-2 text-sm font-medium text-gray-700">Description</label>
                         <textarea
                             name="description"
                             value={formValues.description}
                             onChange={handleChange}
-                            className="w-full p-3 border border-gray-300 rounded-sm resize-none"
-                            rows={4}
+                            className="w-full p-3 border border-gray-300 rounded-sm"
                             required
                         />
                     </div>
 
-                    {/* Price Per Hour */}
                     <div>
                         <label className="block mb-2 text-sm font-medium text-gray-700">Price Per Hour</label>
                         <input
-                            name="pricePerHour"
                             type="number"
+                            name="pricePerHour"
                             value={formValues.pricePerHour}
                             onChange={handleChange}
                             className="w-full p-3 border border-gray-300 rounded-sm"
@@ -153,31 +147,31 @@ const UpdateCarModal: React.FC<IUpdateCarModalProps> = ({ car, isOpen, onClose, 
                             <input
                                 value={newFeature}
                                 onChange={(e) => setNewFeature(e.target.value)}
-                                className="w-full p-3 border border-gray-300 rounded-sm shadow-sm"
-                                placeholder="e.g., Air Conditioning"
+                                className="w-full p-3 border border-gray-300 rounded-sm"
+                                placeholder="Add a feature"
                             />
                             <button
                                 type="button"
                                 onClick={handleAddFeature}
-                                className="px-4 py-2 bg-indigo-600 text-white rounded-sm shadow-md hover:bg-indigo-700"
+                                className="px-4 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700"
                             >
                                 Add
                             </button>
                         </div>
-                        <ul className="mt-2 space-y-1">
-                            {formValues.features.map((feature) => (
-                                <li key={feature} className="flex justify-between items-center">
-                                    <span>{feature}</span>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                            {formValues.features.map((feature, index) => (
+                                <div key={index} className="flex items-center bg-gray-200 text-gray-700 px-2 py-1 rounded-sm">
+                                    <span className="text-sm">{feature}</span>
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveFeature(feature)}
-                                        className="text-red-500 hover:text-red-700"
+                                        className="ml-2 text-red-500 hover:text-red-700"
                                     >
-                                        Remove
+                                        ✕
                                     </button>
-                                </li>
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     </div>
 
                     {/* Status */}
@@ -219,12 +213,21 @@ const UpdateCarModal: React.FC<IUpdateCarModalProps> = ({ car, isOpen, onClose, 
                         />
                     </div>
 
-                    <button
-                        type="submit"
-                        className="px-4 py-2 bg-indigo-600 text-white rounded-sm shadow-md hover:bg-indigo-700 w-full"
-                    >
-                        Submit
-                    </button>
+                    <div className="flex justify-end space-x-2">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-sm hover:bg-gray-400"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="px-4 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700"
+                        >
+                            Update Car
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
