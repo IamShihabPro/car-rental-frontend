@@ -124,16 +124,15 @@ const CarsFilter: React.FC<TFilter> = ({
         <label className={`block mb-2 ${theme?.isDarkMode ? 'text-white' : 'text-gray-800'}`}>Price Range</label>
         <div className="flex items-center justify-between gap-4">
           <input
-            type="range"
+            type="number"
             min="0"
             value={priceRange.min}
             onChange={(e) => setPriceRange({ ...priceRange, min: Number(e.target.value) })}
             className={`w-1/2 p-3 rounded-sm ${theme?.isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-800'}`}
           />
           <input
-            type="range"
+            type="number"
             min="0"
-            max="1000"
             value={priceRange.max}
             onChange={(e) => setPriceRange({ ...priceRange, max: Number(e.target.value) })}
             className={`w-1/2 p-3 rounded-sm ${theme?.isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-800'}`}

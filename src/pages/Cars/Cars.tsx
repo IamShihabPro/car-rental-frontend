@@ -15,7 +15,7 @@ const Cars: React.FC = () => {
 
   const [brand, setBrand] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
   const [sortOrder, setSortOrder] = useState<string>('default');
   const [isElectric, setIsElectric] = useState<boolean>(false);
   const [gps, setGps] = useState<boolean>(false);
@@ -24,7 +24,7 @@ const Cars: React.FC = () => {
   const clearFilters = () => {
     setBrand('');
     setSearchTerm('');
-    setPriceRange({ min: 0, max: 100 });
+    setPriceRange({ min: 0, max: 1000 });
     setSortOrder('default');
     setIsElectric(false);
     setGps(false);
