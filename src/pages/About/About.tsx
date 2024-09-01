@@ -1,6 +1,16 @@
 import React from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
 import Bg from '../../assets/images/cars/tesla-6.avif';
+import angeldimariajm from '../../assets/images/other/angeldimariajm.jpeg'
+import leomessi from '../../assets/images/other/leomessi.jpeg'
+import rodridepaul from '../../assets/images/other/rodridepaul.jpeg'
+
+const teamMembers = [
+  { name: 'John Doe', role: 'CEO', image: angeldimariajm },
+  { name: 'Jane Smith', role: 'CTO', image: leomessi },
+  { name: 'Alice Johnson', role: 'Marketing Manager', image: rodridepaul },
+  { name: 'Bob Brown', role: 'Customer Service Lead', image: leomessi }
+];
 
 const About: React.FC = () => {
   return (
@@ -9,13 +19,14 @@ const About: React.FC = () => {
       <div className="relative container mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center my-10 relative z-10">About Us</h2>
         
+        {/* Existing content */}
+        {/* Left Column */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 relative z-10">
-          {/* Left Column */}
           <div className="lg:w-1/2">
             <div className="bg-transparent p-8 rounded-lg shadow-lg">
               <h3 className="text-3xl font-semibold mb-4">Our Mission</h3>
               <p className="text-lg leading-relaxed mb-6">
-                At [Your Company Name], our mission is to provide the best car rental experience possible. We offer a wide selection of high-quality vehicles to meet your needs, whether you’re looking for a sleek sports car, a reliable sedan, or a spacious SUV. Our commitment is to ensure every customer has a seamless and enjoyable experience from booking to driving.
+                Car Rentour mission is to provide the best car rental experience possible. We offer a wide selection of high-quality vehicles to meet your needs, whether you’re looking for a sleek sports car, a reliable sedan, or a spacious SUV. Our commitment is to ensure every customer has a seamless and enjoyable experience from booking to driving.
               </p>
               <h3 className="text-3xl font-semibold mb-4">Why Choose Us?</h3>
               <ul className="list-disc pl-5 space-y-2">
@@ -32,7 +43,7 @@ const About: React.FC = () => {
             <div className="bg-transparent p-8 rounded-lg shadow-lg">
               <h3 className="text-3xl font-semibold mb-4">Our Story</h3>
               <p className="text-lg leading-relaxed mb-4">
-                Founded in [Year], [Your Company Name] started with a simple idea: to make car rental easy and accessible for everyone. Over the years, we’ve grown into a trusted name in the industry, thanks to our dedication to customer satisfaction and our extensive fleet of top-notch vehicles.
+                Founded in 1990, Car Rentstarted with a simple idea: to make car rental easy and accessible for everyone. Over the years, we’ve grown into a trusted name in the industry, thanks to our dedication to customer satisfaction and our extensive fleet of top-notch vehicles.
               </p>
               <p className="text-lg leading-relaxed">
                 Our team is passionate about cars and committed to providing exceptional service. Whether you’re planning a weekend getaway or a cross-country road trip, we’re here to make sure you have the perfect vehicle for your journey.
@@ -40,7 +51,55 @@ const About: React.FC = () => {
             </div>
           </div>
         </div>
-        
+
+        {/* Our Fleet Section */}
+        <div className="mt-12">
+          <h2 className="text-3xl font-semibold mb-4 text-gray-200 text-center">Our Fleet</h2>
+          <div className="bg-transparent p-8 rounded-lg shadow-lg">
+            <p className="text-lg leading-relaxed mb-4">
+              We offer a diverse range of vehicles to suit every need and preference. Whether you’re looking for an economy car for a quick city trip, a luxury vehicle for a special occasion, or an SUV for a family adventure, we have you covered. Our fleet includes:
+            </p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li><strong>Economy Cars:</strong> Affordable and fuel-efficient options.</li>
+              <li><strong>Luxury Cars:</strong> High-end vehicles for a premium experience.</li>
+              <li><strong>SUVs:</strong> Spacious and versatile for all types of trips.</li>
+              <li><strong>Electric Cars:</strong> Eco-friendly options to reduce your carbon footprint.</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Values & Commitment Section */}
+        <div className="mt-12">
+          <h2 className="text-3xl font-semibold mb-4 text-gray-200 text-center">Values & Commitment</h2>
+          <div className="bg-transparent p-8 rounded-lg shadow-lg">
+            <p className="text-lg leading-relaxed mb-4">
+              Car Rentwe are committed to upholding the highest standards of customer service and sustainability. Our core values include:
+            </p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li><strong>Customer Satisfaction:</strong> We prioritize the needs and preferences of our customers to ensure a great experience.</li>
+              <li><strong>Sustainability:</strong> We are committed to reducing our environmental impact by offering electric and hybrid vehicles.</li>
+              <li><strong>Integrity:</strong> We operate with transparency and honesty in all our dealings.</li>
+              <li><strong>Community Engagement:</strong> We actively support local communities and contribute to charitable causes.</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Contact Information Section */}
+        <div className="mt-12">
+          <h2 className="text-3xl font-semibold mb-4 text-gray-200 text-center">Contact Information</h2>
+          <div className="bg-transparent p-8 rounded-lg shadow-lg">
+            <p className="text-lg leading-relaxed mb-4">
+              We are here to help! For any inquiries or support, please reach out to us using the contact details below:
+            </p>
+            <ul className="space-y-2">
+              <li><strong>Phone:</strong> 01850411622</li>
+              <li><strong>Email:</strong> mshihab.pro@gmail.com</li>
+              <li><strong>Address:</strong> Chattogram, Bangladesh</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Location Section */}
         <div className="mb-12 mt-12">
           <h2 className="text-3xl font-semibold mb-4 text-gray-200 text-center">Our Location</h2>
           <div className="h-64 rounded-lg overflow-hidden shadow-lg">
@@ -55,6 +114,7 @@ const About: React.FC = () => {
           </div>
         </div>
 
+        {/* Follow Us Section */}
         <div className="mb-12">
           <h2 className="text-3xl font-semibold mb-4 text-gray-200 text-center">Follow Us</h2>
           <div className="flex space-x-6 justify-center">
@@ -73,11 +133,28 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        <div className="text-center mt-12">
-          <button className="bg-transparent border text-white py-3 px-8 rounded-sm shadow-lg hover:bg-blue-700 transition duration-300">
-            Contact Us
-          </button>
-        </div>
+        {/* Our Team Section */}
+        <div className="mt-12 py-6">
+            <h2 className="text-3xl font-semibold mb-8 text-gray-200 text-center">Meet Our Team</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {teamMembers.map((member) => (
+                <div
+                  key={member.name}
+                  className="p-6 rounded-sm shadow-lg transform transition-transform duration-300 hover:scale-105"
+                >
+                  <div className="w-full h-56 overflow-hidden mb-4">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-100 mb-2">{member.name}</h3>
+                  <p className="text-gray-400 text-sm">{member.role}</p>
+                </div>
+              ))}
+            </div>
+          </div>
       </div>
     </section>
   );
