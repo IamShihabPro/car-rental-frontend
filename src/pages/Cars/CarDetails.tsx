@@ -1,3 +1,4 @@
+import React, { useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useGetSingleCarQuery } from '@/redux/feature/cars/carsApi';
 import Loader from '@/component/Loader/Loader';
@@ -11,8 +12,33 @@ export type TBooking = {
 const CarDetails: React.FC = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetSingleCarQuery(id as string);
+  const [zoomed, setZoomed] = useState(false);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const lensRef = useRef<HTMLDivElement | null>(null);
 
   const car = data?.data;
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!imgRef.current || !lensRef.current) return;
+
+    const img = imgRef.current;
+    const lens = lensRef.current;
+    const rect = img.getBoundingClientRect();
+
+    const x = e.clientX - rect.left - lens.offsetWidth / 2;
+    const y = e.clientY - rect.top - lens.offsetHeight / 2;
+
+    const maxX = img.width - lens.offsetWidth;
+    const maxY = img.height - lens.offsetHeight;
+
+    lens.style.left = `${Math.max(0, Math.min(x, maxX))}px`;
+    lens.style.top = `${Math.max(0, Math.min(y, maxY))}px`;
+
+    lens.style.backgroundPosition = `-${x * 2}px -${y * 2}px`;
+  };
+
+  const handleMouseEnter = () => setZoomed(true);
+  const handleMouseLeave = () => setZoomed(false);
 
   if (isLoading) {
     return <Loader />;
@@ -30,13 +56,31 @@ const CarDetails: React.FC = () => {
     <section className="bg-gray-900 min-h-screen py-16">
       <div className="container mx-auto px-4 mt-20">
         <div className="flex flex-col md:flex-row gap-10">
-          {/* Car Image */}
-          <div className="md:w-1/2">
+          {/* Car Image with Magnifier */}
+          <div
+            className="md:w-1/2 relative"
+            onMouseMove={handleMouseMove}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <img
+              ref={imgRef}
               src={car.image}
               alt={car.name}
-              className="rounded-lg shadow-2xl w-full object-cover transition-transform duration-500 hover:scale-105"
+              className="rounded-lg shadow-2xl w-full object-cover"
             />
+            {zoomed && (
+              <div
+                ref={lensRef}
+                className="absolute rounded-full border border-gray-300 bg-no-repeat pointer-events-none"
+                style={{
+                  width: '150px',
+                  height: '150px',
+                  backgroundImage: `url(${car.image})`,
+                  backgroundSize: `${imgRef.current?.width! * 2}px ${imgRef.current?.height! * 2}px`,
+                }}
+              ></div>
+            )}
           </div>
 
           {/* Car Details */}
@@ -62,8 +106,10 @@ const CarDetails: React.FC = () => {
               <div>
                 <h3 className="text-xl font-semibold">Features</h3>
                 <ul className="list-disc list-inside text-lg text-gray-400">
-                  {car?.features?.map((feature: any, index: any) => (
-                    <li key={index} className="py-1">{feature}</li>
+                  {car?.features?.map((feature: string, index: number) => (
+                    <li key={index} className="py-1">
+                      {feature}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -72,7 +118,9 @@ const CarDetails: React.FC = () => {
                 <h3 className="text-xl font-semibold">Status</h3>
                 <p
                   className={`text-lg ${
-                    car.status === 'available' ? 'text-green-400' : 'text-red-400'
+                    car.status === 'available'
+                      ? 'text-green-400'
+                      : 'text-red-400'
                   }`}
                 >
                   {car.status.charAt(0).toUpperCase() + car.status.slice(1)}
@@ -115,7 +163,9 @@ const CarDetails: React.FC = () => {
 
             <div className="mb-8">
               <h3 className="text-2xl font-semibold">Price Per Hour</h3>
-              <p className="text-4xl font-bold text-blue-400">${car.pricePerHour.toFixed(2)}</p>
+              <p className="text-4xl font-bold text-blue-400">
+                ৳{car.pricePerHour.toFixed(2)}
+              </p>
             </div>
 
             <Link

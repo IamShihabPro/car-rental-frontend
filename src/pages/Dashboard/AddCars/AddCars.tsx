@@ -23,17 +23,21 @@ const AddCars: React.FC = () => {
     };
 
     const onSubmit: SubmitHandler<TCar> = async (data) => {
+        // Parse the pricePerHour to a float with two decimal places
+        const pricePerHour = parseFloat(parseFloat(data.pricePerHour.toString()).toFixed(2));
+
         // Add features to the data before submitting
-        const carData = { ...data, features };
+        const carData = { ...data, pricePerHour, features };
         console.log(carData);
+
         try {
             const res = await addCars(carData).unwrap();
             if (res?.success) {
-              toast.success(res?.message);
+                toast.success(res?.message);
             }
-          } catch (error) {
+        } catch (error) {
             console.error(error);
-          }
+        }
     };
 
     return (
@@ -74,11 +78,9 @@ const AddCars: React.FC = () => {
                     <div className="flex flex-col">
                         <label className="mb-2 text-sm font-medium text-gray-700">Price per Hour</label>
                         <input
-                            type="number"
-                            
+                            type="text"
                             {...register('pricePerHour', {
                                 required: 'Price per hour is required',
-                                valueAsNumber: true
                             })}
                             className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         />

@@ -1,60 +1,61 @@
-import { useAddBookingsMutation } from '@/redux/feature/booking/bookingApi';
-import { useGetSingleCarQuery } from '@/redux/feature/cars/carsApi';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { useAddBookingsMutation } from '@/redux/feature/booking/bookingApi';
+import { useGetSingleCarQuery } from '@/redux/feature/cars/carsApi';
 import Loader from '../Loader/Loader';
 import { toast } from 'sonner';
+import BookingReviewModal from './BookingReviewModal';
 
 type BookingFormInputs = {
   idType: 'nid' | 'passport';
   idNumber: string;
   drivingLicense: string;
-  // paymentMethod: string;
   gps: boolean;
   childSeat: boolean;
 };
 
-type TBooking = {
-  idType: 'nid' | 'passport';
-  idNumber: string;
-  drivingLicense: string;
-  // paymentMethod: string;
-  carId: string;
-  date: string;
-  startTime: string;
-};
-
-
 const BookingForm: React.FC = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetSingleCarQuery(id as string);
-  const [addBookings] = useAddBookingsMutation()
+  const [addBookings] = useAddBookingsMutation();
 
   const car = data?.data;
 
   const { register, handleSubmit, formState: { errors } } = useForm<BookingFormInputs>();
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bookingData, setBookingData] = useState<BookingFormInputs | null>(null);
 
-  const onSubmit: SubmitHandler<BookingFormInputs> = async (data) => {
+  const onSubmit: SubmitHandler<BookingFormInputs> = (data) => {
+    setBookingData(data);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmBooking = async () => {
+    if (!bookingData || !car) return;
 
     const currentDate = new Date();
-  
-    // Format the date as "YYYY-MM-DD"
     const formattedDate = currentDate.toISOString().split('T')[0];
-  
-    // Format the time as "HH:MM"
     const formattedTime = currentDate.toTimeString().slice(0, 5);
 
-    const bookingData:TBooking  = {...data, carId: car?._id, date: formattedDate, startTime: formattedTime, }
+    const finalBookingData = {
+      ...bookingData,
+      carId: car._id,
+      date: formattedDate,
+      startTime: formattedTime,
+    };
+
     try {
-      const res = await addBookings(bookingData).unwrap();
+      const res = await addBookings(finalBookingData).unwrap();
       if (res?.success) {
         toast.success(res?.message);
       }
     } catch (error: any) {
       toast.error(error?.data?.message);
+    } finally {
+      setIsModalOpen(false);
     }
-    
   };
 
   if (isLoading) {
@@ -78,7 +79,7 @@ const BookingForm: React.FC = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-
+            {/* Form fields */}
             {/* ID Type and ID Number */}
             <div className="flex flex-col">
               <label className="text-white text-lg font-semibold mb-2">ID Type</label>
@@ -112,30 +113,24 @@ const BookingForm: React.FC = () => {
               />
               {errors.drivingLicense && <span className="text-red-500 text-sm mt-2">{errors.drivingLicense.message}</span>}
             </div>
-
-            {/* Payment Method */}
-            {/* <div className="flex flex-col">
-              <label className="text-white text-lg font-semibold mb-2">Payment Method</label>
-              <select
-                {...register('paymentMethod', { required: 'Payment Method is required' })}
-                className="p-3 rounded bg-gray-700 text-white outline-none focus:ring-2 focus:ring-blue-500 hover:bg-gray-600 transition-all"
-              >
-                <option value="sslCommerz">SSL Commerz</option>
-                <option value="aamarPay ">Aamar Pay </option>
-                <option value="stripe">Stripe</option>
-              </select>
-              {errors.paymentMethod && <span className="text-red-500 text-sm mt-2">{errors.paymentMethod.message}</span>}
-            </div> */}
           </div>
 
           <button
-            // onClick={() => handleAddBookings(car)}
             type="submit"
             className="w-full py-4 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-blue-500 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            Confirm Booking
+            Review Booking
           </button>
         </form>
+
+        {/* Booking Review Modal */}
+        <BookingReviewModal
+          isOpen={isModalOpen}
+          carDetails={car}
+          bookingData={bookingData!}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleConfirmBooking}
+        />
       </div>
     </section>
   );
