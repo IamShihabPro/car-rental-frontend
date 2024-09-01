@@ -13,7 +13,7 @@ type TBooking = {
   idType: 'nid' | 'passport';
   idNumber: string;
   drivingLicense: string;
-  paymentMethod: string;
+  // paymentMethod: string;
   carId: string;
   date: string;
   startTime: string;
@@ -67,7 +67,7 @@ const MyBookings: React.FC = () => {
                 <th className="py-3 px-4 border">ID Number</th>
                 <th className="py-3 px-4 border">Driving License</th>
                 <th className="py-3 px-4 border">Status</th>
-                <th className="py-3 px-4 border">Payment Method</th>
+                {/* <th className="py-3 px-4 border">Payment Method</th> */}
                 <th className="py-3 px-4 border">Date</th>
                 <th className="py-3 px-4 border">Start Time</th>
                 <th className="py-3 px-4 border">End Time</th>
@@ -84,7 +84,7 @@ const MyBookings: React.FC = () => {
                   <td className={`py-3 px-4 border font-semibold ${booking.isConfirm ? 'text-green-400' : 'text-red-400'}`}>
                     {booking.isConfirm ? 'Confirmed' : 'Not Confirmed'}
                   </td>
-                  <td className="py-3 px-4 border font-semibold text-gray-700">{booking.paymentMethod}</td>
+                  {/* <td className="py-3 px-4 border font-semibold text-gray-700">{booking.paymentMethod}</td> */}
                   <td className="py-3 px-4 border font-semibold text-gray-700">
                     {new Date(booking.date).toLocaleDateString()}
                   </td>
@@ -101,11 +101,39 @@ const MyBookings: React.FC = () => {
                         Cancel
                       </button>
                     )}
-                    {booking.isConfirm && !booking.isPaid && (
-                      <Link to="/dashboard/mybookings/payment" className="text-white bg-green-500 px-4 py-2">
+
+                    {
+                      booking.isConfirm ? <>
+
+                      {
+                        booking.isCarReturn  ? 
+                        <div>
+
+                        {
+                          booking.isPaid ? (
+                            <p className="text-green-500 px-2">Paid</p>
+                            
+                          ):  <Link
+                          to={`/dashboard/mybookings/payment/${booking?._id}`}
+                          className="text-white bg-green-500 px-4 py-2"
+                          >
                         Pay Now
-                      </Link>
-                    )}
+                      </Link> 
+                      }
+                      </div>
+                        
+                        : <>
+                        
+                        <p className="text-red-500">Car Not Return Yet</p>
+                        </>
+                      }
+
+                      </> 
+                      
+                      : <p className="text-red-500">Booking Not Approved Yet</p>
+                    }
+
+
                   </td>
                 </tr>
               ))}

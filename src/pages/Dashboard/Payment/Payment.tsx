@@ -1,49 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useGetSingleBookingQuery } from '@/redux/feature/booking/bookingApi';
+import { useCretePaymentMutation } from '@/redux/feature/Payment/paymentApi';
+import { toast } from 'sonner';
 
 export type PaymentMethod = 'AamarPay' | 'SSLCommerz';
 
 export interface PaymentDetails {
-  amount: number;
   paymentMethod: PaymentMethod;
+  payInfo: any;
 }
 
 const Payment: React.FC = () => {
+  const [cretePayment, { isLoading: isPaymentLoading, error: paymentError }] = useCretePaymentMutation();
+
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('AamarPay');
-  const [amount, setAmount] = useState<number>(0);
+  const [payInfo, setPayInfo] = useState<any>(null);
+
+  const { id } = useParams<{ id: string }>();
+  const { data, error, isLoading } = useGetSingleBookingQuery(id);
+
+  useEffect(() => {
+    if (data?.data) {
+      setPayInfo(data.data);
+    }
+  }, [data]);
 
   const handlePaymentMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentMethod(event.target.value as PaymentMethod);
   };
 
-  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(parseFloat(event.target.value));
-  };
+  const handleSubmit = async () => {
+    if (!payInfo) return;
 
-  const handleSubmit = () => {
     const paymentDetails: PaymentDetails = {
-      amount,
       paymentMethod,
+      payInfo,
     };
 
-    if (paymentMethod === 'AamarPay') {
-      aamarPayPayment?.(paymentDetails);
-    } else if (paymentMethod === 'SSLCommerz') {
-      sslCommerzPayment?.(paymentDetails);
+    try {
+      if (paymentMethod === 'AamarPay') {
+        await aamarPayPayment(paymentDetails);
+      } else if (paymentMethod === 'SSLCommerz') {
+        await sslCommerzPayment(paymentDetails);
+      }
+
+      // Handle successful payment (e.g., redirect to a success page or show a message)
+    } catch (error) {
+      // Handle payment errors (e.g., show a notification or log the error)
+      console.error('Payment failed:', error);
     }
-
-    // Handle the response accordingly
   };
 
-  // Mock functions to represent payment integrations (replace with actual implementations)
-  const aamarPayPayment = (details: PaymentDetails) => {
-    console.log('Processing with AamarPay:', details);
-    // Implement AamarPay payment processing here
+  const aamarPayPayment = async (details: PaymentDetails) => {
+    console.log(details.payInfo);
+    const res = await cretePayment(details.payInfo); // Sending the full payInfo object
+    console.log('AamarPay response:', res);
+    window.location.href = res.data.data.payment_url
+
   };
 
-  const sslCommerzPayment = (details: PaymentDetails) => {
+  const sslCommerzPayment = async (details: PaymentDetails) => {
     console.log('Processing with SSLCommerz:', details);
-    // Implement SSLCommerz payment processing here
+    
+    try {
+      const res = await cretePayment(details.payInfo.unwrap());
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+      }
+    } catch (error: any) {
+      console.error(error?.data?.message);
+    }
+    
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching booking data</div>;
+  }
 
   return (
     <div className="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-20">
@@ -54,8 +91,8 @@ const Payment: React.FC = () => {
         <input
           type="number"
           className="w-full px-4 py-2 border rounded-lg bg-gray-700 text-white"
-          value={amount}
-          onChange={handleAmountChange}
+          value={payInfo?.totalCost || ''}
+          readOnly
         />
       </div>
 
@@ -80,56 +117,42 @@ const Payment: React.FC = () => {
               onChange={handlePaymentMethodChange}
               className="mr-2"
             />
-            SSLCommerz
+            SSL Commerz
           </label>
         </div>
       </div>
 
-      {/* Conditional Layout Rendering */}
       {paymentMethod === 'AamarPay' && (
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold text-white mb-2">Aamar Pay Details</h3>
-          <p className="text-white mb-2">You will be redirected to the Aamar Pay gateway for payment.</p>
-          <div className="mb-2">
-            <label className="block text-white font-semibold mb-2">Additional Aamar Pay Info:</label>
-            <input
-              type="text"
-              className="w-full px-4 py-2 border rounded-lg bg-gray-700 text-white"
-              placeholder="Enter any additional info for Aamar Pay"
-            />
-          </div>
+        <div>
+          <h3 className="text-xl font-semibold text-white mb-4">AamarPay Details</h3>
+          {/* Add AamarPay specific fields here */}
+          <button
+            onClick={handleSubmit}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+            disabled={isPaymentLoading}
+          >
+            {isPaymentLoading ? 'Processing...' : 'Proceed To Payment'}
+          </button>
         </div>
       )}
 
       {paymentMethod === 'SSLCommerz' && (
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold text-white mb-2">SSLCommerz Details</h3>
-          <p className="text-white mb-2">You will be redirected to the SSLCommerz gateway for payment.</p>
-          <div className="mb-2">
-            <label className="block text-white font-semibold mb-2">Mobile Number:</label>
-            <input
-              type="text"
-              className="w-full px-4 py-2 border rounded-lg bg-gray-700 text-white"
-              placeholder="Enter your mobile number"
-            />
-          </div>
-          <div className="mb-2">
-            <label className="block text-white font-semibold mb-2">Email Address:</label>
-            <input
-              type="email"
-              className="w-full px-4 py-2 border rounded-lg bg-gray-700 text-white"
-              placeholder="Enter your email address"
-            />
-          </div>
+        <div>
+          <h3 className="text-xl font-semibold text-white mb-4">SSLCommerz Details</h3>
+          {/* Add SSLCommerz specific fields here */}
+          <button
+            onClick={handleSubmit}
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg"
+            disabled={isPaymentLoading}
+          >
+            {isPaymentLoading ? 'Processing...' : 'Proceed To Payment'}
+          </button>
         </div>
       )}
 
-      <button
-        onClick={handleSubmit}
-        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-      >
-        Proceed to Pay
-      </button>
+      {paymentError && (
+        <div className="text-red-500 mt-4">Error processing payment. Please try again.</div>
+      )}
     </div>
   );
 };

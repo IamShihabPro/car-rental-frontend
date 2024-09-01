@@ -88,7 +88,7 @@ export const router = createBrowserRouter([
                 element: <MyBookings/>
             },
             {
-                path: '/dashboard/mybookings/payment',
+                path: '/dashboard/mybookings/payment/:id',
                 element: <Payment/>
             },
         ]

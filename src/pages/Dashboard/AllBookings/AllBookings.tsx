@@ -16,7 +16,7 @@ type TBooking = {
   idType: 'nid' | 'passport';
   idNumber: string;
   drivingLicense: string;
-  paymentMethod: string;
+//   paymentMethod: string;
   car: TCar;
   date: string;
   startTime: string;

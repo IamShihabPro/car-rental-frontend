@@ -25,9 +25,12 @@ const CarsCard: React.FC<CarsCardProps> = ({ car }) => {
           <Link to={`/cars/${car?._id}`} className="bg-white bg-opacity-20 border border-white px-6 py-3 text-white font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300 rounded-sm shadow-md">
             Details
           </Link>
-          <button className="bg-white bg-opacity-20 border border-white px-6 py-3 text-white font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300 rounded-sm shadow-md">
-            Book Now
-          </button>
+          <Link
+              to={`/cars/${car?._id}/booking`}
+              className="bg-white bg-opacity-20 border border-white px-6 py-3 text-white font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300 rounded-sm shadow-md"
+            >
+              Book Now
+            </Link>
         </div>
       </div>
     </Link>

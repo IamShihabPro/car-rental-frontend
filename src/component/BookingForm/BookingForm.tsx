@@ -10,7 +10,7 @@ type BookingFormInputs = {
   idType: 'nid' | 'passport';
   idNumber: string;
   drivingLicense: string;
-  paymentMethod: string;
+  // paymentMethod: string;
   gps: boolean;
   childSeat: boolean;
 };
@@ -19,7 +19,7 @@ type TBooking = {
   idType: 'nid' | 'passport';
   idNumber: string;
   drivingLicense: string;
-  paymentMethod: string;
+  // paymentMethod: string;
   carId: string;
   date: string;
   startTime: string;
@@ -114,7 +114,7 @@ const BookingForm: React.FC = () => {
             </div>
 
             {/* Payment Method */}
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <label className="text-white text-lg font-semibold mb-2">Payment Method</label>
               <select
                 {...register('paymentMethod', { required: 'Payment Method is required' })}
@@ -125,7 +125,7 @@ const BookingForm: React.FC = () => {
                 <option value="stripe">Stripe</option>
               </select>
               {errors.paymentMethod && <span className="text-red-500 text-sm mt-2">{errors.paymentMethod.message}</span>}
-            </div>
+            </div> */}
           </div>
 
           <button
