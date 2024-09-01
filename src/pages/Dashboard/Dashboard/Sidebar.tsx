@@ -2,15 +2,9 @@ import { FaHome, FaUser, FaCog, FaCarSide } from 'react-icons/fa';
 import { TbCarSuv } from "react-icons/tb";
 import { IoCloseSharp } from 'react-icons/io5';
 import { NavLink, useLocation } from 'react-router-dom';
-
-const navItems = [
-    { id: 'profile', icon: <FaUser className="mr-3 text-xl" />, label: 'Profile', link: '/dashboard/profile' },
-    { id: 'addcars', icon: <TbCarSuv className="mr-3 text-xl" />, label: 'Add Cars', link: '/dashboard/addcars' },
-    { id: 'allcars', icon: <FaCarSide className="mr-3 text-xl" />, label: 'All Cars', link: '/dashboard/allcars' },
-    { id: 'allbookings', icon: <FaCog className="mr-3 text-xl" />, label: 'All Bookings', link: '/dashboard/allbookings' },
-    { id: 'mybookings', icon: <FaCog className="mr-3 text-xl" />, label: 'My Bookings', link: '/dashboard/mybookings' },
-    { id: 'home', icon: <FaHome className="mr-3 text-xl" />, label: 'Home', link: '/' },
-];
+import { useAppSelector } from '@/redux/hooks';
+import { useCurrentToken } from '@/redux/feature/user/userSlice';
+import { verifyToken } from '@/utils/verifyToken';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -19,6 +13,28 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     const location = useLocation();
+
+    const token = useAppSelector(useCurrentToken);
+    let user;
+
+    if (token) {
+        user = verifyToken(token);
+    }
+
+    const userNavItems = [
+        { id: 'profile', icon: <FaUser className="mr-3 text-xl" />, label: 'Profile', link: '/dashboard/profile' },
+        { id: 'mybookings', icon: <FaCog className="mr-3 text-xl" />, label: 'My Bookings', link: '/dashboard/mybookings' },
+        { id: 'home', icon: <FaHome className="mr-3 text-xl" />, label: 'Home', link: '/' },
+    ];
+
+    const adminNavItems = [
+        { id: 'profile', icon: <FaUser className="mr-3 text-xl" />, label: 'Profile', link: '/dashboard/profile' },
+        { id: 'addcars', icon: <TbCarSuv className="mr-3 text-xl" />, label: 'Add Cars', link: '/dashboard/addcars' },
+        { id: 'allcars', icon: <FaCarSide className="mr-3 text-xl" />, label: 'All Cars', link: '/dashboard/allcars' },
+        { id: 'allbookings', icon: <FaCog className="mr-3 text-xl" />, label: 'All Bookings', link: '/dashboard/allbookings' },
+    ];
+
+    const navItems = user?.role === 'admin' ? adminNavItems : userNavItems;
 
     return (
         <aside
