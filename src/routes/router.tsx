@@ -12,6 +12,7 @@ import Contact from "@/pages/Contact/Contact";
 import AddCars from "@/pages/Dashboard/AddCars/AddCars";
 import AllBookings from "@/pages/Dashboard/AllBookings/AllBookings";
 import AllCars from "@/pages/Dashboard/AllCars/AllCars";
+import AllUsers from "@/pages/Dashboard/AllUsers/AllUsers";
 import Dashboard from "@/pages/Dashboard/Dashboard/Dashboard";
 import MyBookings from "@/pages/Dashboard/MyBookings/MyBookings";
 import Payment from "@/pages/Dashboard/Payment/Payment";
@@ -74,7 +75,7 @@ export const router = createBrowserRouter([
                 element: <Profile/>
             },
             {
-                path: 'addcars',
+                path: '/dashboard/addcars',
                 element: <AdminProtected> <AddCars/> </AdminProtected>
             },
             {
@@ -84,6 +85,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/allbookings',
                 element: <AdminProtected> <AllBookings/> </AdminProtected>
+            },
+            {
+                path: '/dashboard/allusers',
+                element: <AdminProtected> <AllUsers/> </AdminProtected>
             },
             {
                 path: '/dashboard/mybookings',
