@@ -128,6 +128,17 @@ const CarDetails: React.FC = () => {
               </div>
 
               <div>
+                <h3 className="text-xl font-semibold">Location</h3>
+                <p
+                  className={`text-lg ${
+                    car.location ? 'text-green-400' : 'text-red-400'
+                  }`}
+                >
+                  {car.location}
+                </p>
+              </div>
+
+              <div>
                 <h3 className="text-xl font-semibold">Electric Car</h3>
                 <p
                   className={`text-lg ${

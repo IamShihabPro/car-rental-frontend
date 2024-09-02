@@ -19,6 +19,7 @@ export interface TCar {
   description: string;
   color: string;
   image: string;
+  location: string;
   isElectric: boolean;
   gps: boolean;
   childSeat: boolean;

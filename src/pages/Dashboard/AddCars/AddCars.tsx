@@ -88,13 +88,23 @@ const AddCars: React.FC = () => {
                     </div>
                 </div>
 
-                <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-700">Image URL</label>
-                    <input
-                        {...register('image', { required: 'Image URL is required' })}
-                        className="w-full p-3 border border-gray-300 rounded-sm shadow-sm"
-                    />
-                    {errors.image && <span className="text-red-500 text-sm">{errors.image.message}</span>}
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-700">Image URL</label>
+                        <input
+                            {...register('image', { required: 'Image URL is required' })}
+                            className="w-full p-3 border border-gray-300 rounded-sm shadow-sm"
+                        />
+                        {errors.image && <span className="text-red-500 text-sm">{errors.image.message}</span>}
+                    </div>
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-700">Location</label>
+                        <input
+                            {...register('location', { required: 'Location URL is required' })}
+                            className="w-full p-3 border border-gray-300 rounded-sm shadow-sm"
+                        />
+                        {errors.location && <span className="text-red-500 text-sm">{errors.location.message}</span>}
+                    </div>
                 </div>
 
                 <div>

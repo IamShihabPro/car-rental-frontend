@@ -12,6 +12,7 @@ interface TCar {
     description: string;
     color: string;
     image: string;
+    location: string;
     isElectric: boolean;
     status: TCarStatus; 
     features: string[];
@@ -39,7 +40,7 @@ const AllCars = () => {
                 try {
                     const res = await deleteCar(carId).unwrap();
                     if (res?.success) {
-                        toast.success(res?.message);
+                        toast.success(res?.data?.message);
                     }
                 } catch (error: any) {
                     toast.error(error?.data?.message);
@@ -79,6 +80,7 @@ const AllCars = () => {
                                     <th className="py-3 px-4 border">Color</th>
                                     <th className="py-3 px-4 border">Status</th>
                                     <th className="py-3 px-4 border">Price Per Hour</th>
+                                    <th className="py-3 px-4 border">Location</th>
                                     <th className="py-3 px-4 border">Actions</th>
                                 </tr>
                             </thead>
@@ -108,17 +110,18 @@ const AllCars = () => {
                                             </span>
                                         </td>
                                         <td className="py-3 px-4 border font-semibold text-gray-700">${car?.pricePerHour.toFixed(2)}</td>
+                                        <td className="py-3 px-4 border font-semibold text-gray-600">{car?.location}</td>
                                         <td className="py-3 px-4 border">
                                            <div className='flex justify-center space-x-2'>
                                             <button
                                                     onClick={() => handleEdit(car)}
-                                                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition transform hover:scale-105 shadow-sm"
+                                                    className="bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600 transition transform hover:scale-105 shadow-sm"
                                                 >
                                                     Edit
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(car?._id)}
-                                                    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition transform hover:scale-105 shadow-sm"
+                                                    className="bg-red-500 text-white px-4 py-2 rounded-sm hover:bg-red-600 transition transform hover:scale-105 shadow-sm"
                                                 >
                                                     Delete
                                                 </button>

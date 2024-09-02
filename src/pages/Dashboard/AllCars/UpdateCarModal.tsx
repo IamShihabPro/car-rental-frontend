@@ -13,6 +13,7 @@ interface IUpdateCarModalProps {
         status: TCarStatus; 
         color: string;
         image: string;
+        location: string;
     };
     isOpen: boolean;
     onClose: () => void;
@@ -29,6 +30,7 @@ const UpdateCarModal: React.FC<IUpdateCarModalProps> = ({ car, isOpen, onClose, 
         status: 'available' as TCarStatus,
         color: '',
         image: '',
+        location: '',
     });
 
     const [newFeature, setNewFeature] = useState('');
@@ -44,6 +46,7 @@ const UpdateCarModal: React.FC<IUpdateCarModalProps> = ({ car, isOpen, onClose, 
                 status: car.status,
                 color: car.color,
                 image: car.image,
+                location: car.location,
             });
         }
     }, [car]);
@@ -122,6 +125,17 @@ const UpdateCarModal: React.FC<IUpdateCarModalProps> = ({ car, isOpen, onClose, 
                         <textarea
                             name="description"
                             value={formValues.description}
+                            onChange={handleChange}
+                            className="w-full p-3 border border-gray-300 rounded-sm"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-700">Location</label>
+                        <textarea
+                            name="location"
+                            value={formValues.location}
                             onChange={handleChange}
                             className="w-full p-3 border border-gray-300 rounded-sm"
                             required
