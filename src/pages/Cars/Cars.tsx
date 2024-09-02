@@ -14,6 +14,7 @@ const Cars: React.FC = () => {
   const theme = useSelector((state: RootState) => state.theme);
 
   const [brand, setBrand] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
   const [sortOrder, setSortOrder] = useState<string>('default');
@@ -23,6 +24,7 @@ const Cars: React.FC = () => {
 
   const clearFilters = () => {
     setBrand('');
+    setLocation('');
     setSearchTerm('');
     setPriceRange({ min: 0, max: 1000 });
     setSortOrder('default');
@@ -40,15 +42,16 @@ const Cars: React.FC = () => {
 
     return sortedCars.filter((car) => {
       const matchesBrand = !brand || car.brand === brand;
+      const matchesLocation = !location || car?.location === location;
       const matchesSearchTerm = !searchTerm || car.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPriceRange = car.pricePerHour >= priceRange.min && car.pricePerHour <= priceRange.max;
       const matchesElectric = !isElectric || car.isElectric;
       const matchesGPS = !gps || car.gps;
       const matchesChildSeat = !childSeat || car.childSeat;
 
-      return matchesBrand && matchesSearchTerm && matchesPriceRange && matchesElectric && matchesGPS && matchesChildSeat;
+      return matchesBrand && matchesLocation && matchesSearchTerm && matchesPriceRange && matchesElectric && matchesGPS && matchesChildSeat;
     });
-  }, [cars, brand, searchTerm, priceRange, sortOrder, isElectric, gps, childSeat]);
+  }, [cars, brand, location, searchTerm, priceRange, sortOrder, isElectric, gps, childSeat]);
 
   if (isLoading) {
     return <Loader />;
@@ -71,6 +74,9 @@ const Cars: React.FC = () => {
               brands={Array.from(new Set(cars.map((car) => car.brand)))}
               brand={brand}
               setBrand={setBrand}
+              locations={Array.from(new Set(cars.map((car) => car.location)))}
+              location={location}
+              setLocation={setLocation}
               priceRange={priceRange}
               setPriceRange={setPriceRange}
               searchTerm={searchTerm}

@@ -6,6 +6,9 @@ interface TFilter {
   brands: string[];
   brand: string;
   setBrand: (brand: string) => void;
+  locations: string[];
+  location: string;
+  setLocation: (location: string) => void;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
   priceRange: { min: number; max: number };
@@ -25,6 +28,9 @@ const CarsFilter: React.FC<TFilter> = ({
   brands,
   brand,
   setBrand,
+  locations,
+  location,
+  setLocation,
   searchTerm,
   setSearchTerm,
   priceRange,
@@ -73,7 +79,7 @@ const CarsFilter: React.FC<TFilter> = ({
       </div>
 
       <div className="mb-6">
-        <label className={`block mb-2 ${theme?.isDarkMode ? 'text-white' : 'text-gray-800'}`}>Brand</label>
+        <label className={`block mb-2 ${theme?.isDarkMode ? 'text-white' : 'text-gray-800'}`}>Brands</label>
         <select
           value={brand}
           onChange={(e) => setBrand(e.target.value)}
@@ -85,6 +91,24 @@ const CarsFilter: React.FC<TFilter> = ({
           {brands.map((brand, index) => (
             <option key={index} value={brand}>
               {brand}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mb-6">
+        <label className={`block mb-2 ${theme?.isDarkMode ? 'text-white' : 'text-gray-800'}`}>Locations</label>
+        <select
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className={`w-full p-3 rounded-sm focus:outline-none focus:ring-2 ${
+            theme?.isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-800'
+          }`}
+        >
+          <option value="">All Locations</option>
+          {locations.map((location, index) => (
+            <option key={index} value={location}>
+              {location}
             </option>
           ))}
         </select>

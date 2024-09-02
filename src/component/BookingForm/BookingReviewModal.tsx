@@ -27,7 +27,7 @@ const BookingReviewModal: React.FC<BookingReviewModalProps> = ({
           <p><strong>Brand:</strong> {carDetails.brand}</p>
           <p><strong>Name:</strong> {carDetails.name}</p>
           <p><strong>Color:</strong> {carDetails.color}</p>
-          <p><strong>Price Per Hour:</strong> ${carDetails.pricePerHour.toFixed(2)}</p>
+          <p><strong>Price Per Hour:</strong> ৳ {carDetails.pricePerHour.toFixed(2)}</p>
           {/* Add more car details as needed */}
         </div>
 
