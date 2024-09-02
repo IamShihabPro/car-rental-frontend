@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/cars/:id/booking',
-                element: <BookingForm/>
+                element: <ProtectedRoute> <BookingForm/> </ProtectedRoute>,
             },
         ]
     },

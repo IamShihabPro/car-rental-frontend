@@ -117,14 +117,14 @@ const Payment: React.FC = () => {
               onChange={handlePaymentMethodChange}
               className="mr-2"
             />
-            SSL Commerz
+            SSL Commerz (optional)
           </label>
         </div>
       </div>
 
       {paymentMethod === 'AamarPay' && (
         <div>
-          <h3 className="text-xl font-semibold text-white mb-4">AamarPay Details</h3>
+          <h3 className="text-xl font-semibold text-white mb-4">Choose AamarPay</h3>
           {/* Add AamarPay specific fields here */}
           <button
             onClick={handleSubmit}
@@ -138,7 +138,7 @@ const Payment: React.FC = () => {
 
       {paymentMethod === 'SSLCommerz' && (
         <div>
-          <h3 className="text-xl font-semibold text-white mb-4">SSLCommerz Details</h3>
+          <h3 className="text-xl font-semibold text-white mb-4">Choose SSLCommerz</h3>
           {/* Add SSLCommerz specific fields here */}
           <button
             onClick={handleSubmit}
