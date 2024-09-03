@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { TSignup } from "@/types/userTypes";
 import { useSignupMutation } from "@/redux/feature/user/userApi";
 import { toast } from "sonner";
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import Bg from '../../assets/images/cars/bmw-5.webp';
+
+type TSignup = {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    phone: string;
+    address: string;
+    image: string;
+    termsAccepted: boolean;
+}
 
 const Signup: React.FC = () => {
     const [passwordVerify, setPasswordVerify] = useState('');
@@ -16,7 +26,6 @@ const Signup: React.FC = () => {
     const [formData, setFormData] = useState<TSignup>({
         name: '',
         email: '',
-        role: '',
         password: '',
         confirmPassword: '',
         phone: '',
@@ -45,8 +54,8 @@ const Signup: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (formData.password === formData.confirmPassword) {
-            const { name, email, password, role, address, phone, image } = formData;
-            const datas = { name, email, password, role, address, phone, image };
+            const { name, email, password, address, phone, image } = formData;
+            const datas = { name, email, password, address, phone, image };
 
             try {
                 const res = await signup(datas).unwrap();
@@ -147,20 +156,6 @@ const Signup: React.FC = () => {
                                 className="w-full px-4 py-3 border border-transparent rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white bg-gray-800 transition duration-300 ease-in-out transform hover:scale-105"
                                 required
                             />
-                        </div>
-                        <div className="col-span-1">
-                            <label className="text-white">Role</label>
-                            <select 
-                                name="role" 
-                                value={formData.role} 
-                                onChange={handleInputChange} 
-                                className="w-full px-4 py-3 border border-transparent rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white bg-gray-800 transition duration-300 ease-in-out transform hover:scale-105"
-                                required
-                            >
-                                <option value="" disabled>Select Role</option>
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
-                            </select>
                         </div>
                         <div className="col-span-1">
                             <label className="text-white">Phone Number</label>
