@@ -1,4 +1,5 @@
-import { FaHome, FaUser, FaCog, FaCarSide } from 'react-icons/fa';
+import { FaHome, FaUser, FaCarSide, FaUsers } from 'react-icons/fa';
+import { LiaCarSolid } from "react-icons/lia";
 import { FaChartColumn } from "react-icons/fa6";
 import { TbCarSuv } from "react-icons/tb";
 import { IoCloseSharp } from 'react-icons/io5';
@@ -24,7 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
     const userNavItems = [
         { id: 'profile', icon: <FaUser className="mr-3 text-xl" />, label: 'Profile', link: '/dashboard/profile' },
-        { id: 'mybookings', icon: <FaCog className="mr-3 text-xl" />, label: 'My Bookings', link: '/dashboard/mybookings' },
+        { id: 'mybookings', icon: <LiaCarSolid className="mr-3 text-xl" />, label: 'My Bookings', link: '/dashboard/mybookings' },
         { id: 'home', icon: <FaHome className="mr-3 text-xl" />, label: 'Home', link: '/' },
     ];
 
@@ -33,8 +34,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         { id: 'chart', icon: <FaChartColumn className="mr-3 text-xl" />, label: 'Chart', link: '/dashboard/chart' },
         { id: 'addcars', icon: <TbCarSuv className="mr-3 text-xl" />, label: 'Add Cars', link: '/dashboard/addcars' },
         { id: 'allcars', icon: <FaCarSide className="mr-3 text-xl" />, label: 'All Cars', link: '/dashboard/allcars' },
-        { id: 'allbookings', icon: <FaCog className="mr-3 text-xl" />, label: 'All Bookings', link: '/dashboard/allbookings' },
-        { id: 'allusers', icon: <FaCog className="mr-3 text-xl" />, label: 'All Users', link: '/dashboard/allusers' },
+        { id: 'allbookings', icon: <LiaCarSolid className="mr-3 text-xl" />, label: 'All Bookings', link: '/dashboard/allbookings' },
+        { id: 'allusers', icon: <FaUsers className="mr-3 text-xl" />, label: 'All Users', link: '/dashboard/allusers' },
         { id: 'home', icon: <FaHome className="mr-3 text-xl" />, label: 'Home', link: '/' }
     ];
 
