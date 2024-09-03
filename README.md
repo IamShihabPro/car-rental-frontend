@@ -1,3 +1,8 @@
+## Admin email and password
+```js
+email: shihab@gmail.com
+password: 123456
+```
 
 ## How to install the project 
 
@@ -7,7 +12,7 @@ At first clone the project and open command prompt and type
 git clone https://github.com/IamShihabPro/car-rental-frontend.git
 ```
 
-Install project command prompt
+cd project-directory and install project command prompt
 
 ```js
 npm install
