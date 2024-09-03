@@ -1,6 +1,4 @@
 import {
-    LineChart,
-    Line,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -19,7 +17,7 @@ import { useGetBookingsQuery } from "@/redux/feature/booking/bookingApi";
 import { TCar } from '@/types/userTypes';
 import { useGetCarsQuery } from '@/redux/feature/cars/carsApi';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF6347', '#FF4500', '#FFD700', '#ADFF2F'];
+const COLORS = ['#6D28D9', '#EC4899', '#10B981', '#F59E0B', '#3B82F6', '#F43F5E', '#6366F1', '#14B8A6'];
 
 type TUser = {
     _id: string;
@@ -40,7 +38,7 @@ type TBooking = {
     isCarReturn: boolean;
     isPaid: boolean;
     isDelete: boolean;
-    totalCost: number; // Assuming this property exists
+    totalCost: number;
     user: TUser;
 };
 
@@ -93,14 +91,37 @@ const Chart = () => {
         { name: 'Electric', value: cars.filter(car => car.isElectric).length },
         { name: 'Non-Electric', value: cars.filter(car => !car.isElectric).length },
     ];
+    const carGPSData = [
+        { name: 'GPS', value: cars.filter(car => car.gps).length },
+        { name: 'Non-GPS', value: cars.filter(car => !car.gps).length },
+    ];
+    const carChildSeatData = [
+        { name: 'Child Seat', value: cars.filter(car => car.childSeat).length },
+        { name: 'Non-Child Seat', value: cars.filter(car => !car.childSeat).length },
+    ];
 
     return (
-        <div className="p-8 bg-gradient-to-r from-green-400 to-blue-500 min-h-screen">
-            <h1 className="text-4xl font-extrabold mb-10 text-indigo-800">Car and Booking Overview</h1>
+        <div className="p-8 bg-gray-900 min-h-screen">
+            <h1 className="text-4xl font-extrabold mb-10 text-blue-500 drop-shadow-lg">Car and Booking Overview</h1>
 
-            <div className="mb-10 p-6 bg-white rounded-lg shadow-lg">
-                <h2 className="text-3xl font-semibold mb-4 text-pink-600">Total Car Brands</h2>
-                <p className="text-xl font-medium text-purple-700">Total Unique Brands: <span className="font-bold">{brandCount}</span></p>
+            <div className="p-6 mb-10 bg-white rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <h2 className="text-3xl font-semibold mb-4 text-indigo-600">Revenue Overview</h2>
+                <p className="text-xl font-medium text-green-700 mb-4">Total Revenue: <span className="font-bold">৳{totalRevenue.toFixed(2)}</span></p>
+                <ResponsiveContainer width="100%" height={400}>
+                    <BarChart data={revenueData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '10px', color: '#333', boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)' }} />
+                        <Legend />
+                        <Bar dataKey="revenue" fill="#82ca9d" barSize={50} />
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
+
+            <div className="mb-10 p-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <h2 className="text-3xl font-semibold mb-4 text-indigo-600">Car Brands</h2>
+                <p className="text-xl font-medium text-indigo-700 mb-6">Total Car Brands: <span className="font-bold">{brandCount}</span></p>
                 <ResponsiveContainer width="100%" height={400}>
                     <PieChart>
                         <Pie
@@ -117,47 +138,80 @@ const Chart = () => {
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Pie>
-                        <Tooltip contentStyle={{ backgroundColor: '#f0f4f7', borderRadius: '10px', color: '#333' }} />
+                        <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '10px', color: '#333', boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)' }} />
                     </PieChart>
                 </ResponsiveContainer>
             </div>
 
-            <div className="mb-10 p-6 bg-white rounded-lg shadow-lg">
-                <h2 className="text-3xl font-semibold mb-4 text-pink-600">Car Type Distribution</h2>
-                <ResponsiveContainer width="100%" height={400}>
-                    <PieChart>
-                        <Pie
-                            data={carTypeData}
-                            cx="50%"
-                            cy="50%"
-                            labelLine={false}
-                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                            outerRadius={150}
-                            fill="#82ca9d"
-                            dataKey="value"
-                        >
-                            {carTypeData.map((_, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                        <Tooltip contentStyle={{ backgroundColor: '#f0f4f7', borderRadius: '10px', color: '#333' }} />
-                    </PieChart>
-                </ResponsiveContainer>
-            </div>
+            <div className="mb-10 p-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div>
+                    <h2 className="text-3xl font-semibold mb-4 text-indigo-600">Car Type Distribution</h2>
+                    <ResponsiveContainer width="100%" height={400}>
+                        <PieChart>
+                            <Pie
+                                data={carTypeData}
+                                cx="50%"
+                                cy="50%"
+                                labelLine={false}
+                                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                outerRadius={150}
+                                fill="#82ca9d"
+                                dataKey="value"
+                            >
+                                {carTypeData.map((_, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '10px', color: '#333', boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)' }} />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
 
-            <div className="p-6 bg-white rounded-lg shadow-lg">
-                <h2 className="text-3xl font-semibold mb-4 text-pink-600">Revenue Overview</h2>
-                <p className="text-xl font-medium text-green-700 mb-4">Total Revenue: <span className="font-bold">${totalRevenue.toFixed(2)}</span></p>
-                <ResponsiveContainer width="100%" height={400}>
-                    <BarChart data={revenueData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <Tooltip contentStyle={{ backgroundColor: '#f0f4f7', borderRadius: '10px', color: '#333' }} />
-                        <Legend />
-                        <Bar dataKey="revenue" fill="#8884d8" />
-                    </BarChart>
-                </ResponsiveContainer>
+                <div>
+                    <h2 className="text-3xl font-semibold mb-4 text-indigo-600">GPS Distribution</h2>
+                    <ResponsiveContainer width="100%" height={400}>
+                        <PieChart>
+                            <Pie
+                                data={carGPSData}
+                                cx="50%"
+                                cy="50%"
+                                labelLine={false}
+                                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                outerRadius={150}
+                                fill="#82ca9d"
+                                dataKey="value"
+                            >
+                                {carGPSData.map((_, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '10px', color: '#333', boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)' }} />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+
+                <div>
+                    <h2 className="text-3xl font-semibold mb-4 text-indigo-600">Child Seat Distribution</h2>
+                    <ResponsiveContainer width="100%" height={400}>
+                        <PieChart>
+                            <Pie
+                                data={carChildSeatData}
+                                cx="50%"
+                                cy="50%"
+                                labelLine={false}
+                                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                outerRadius={150}
+                                fill="#82ca9d"
+                                dataKey="value"
+                            >
+                                {carChildSeatData.map((_, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '10px', color: '#333', boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)' }} />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
         </div>
     );
