@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGetAllUsersQuery, useUpdateUserMutation } from "@/redux/feature/user/userApi";
+import { useDeleteUserMutation, useGetAllUsersQuery, useUpdateUserMutation } from "@/redux/feature/user/userApi";
 import { toast } from 'sonner';
 import Loader from '@/component/Loader/Loader';
 import ErrorComponent from '@/component/Loader/ErrorComponent';
@@ -18,21 +18,34 @@ export type TUserRole = 'admin' | 'user';
 
 const AllUsers = () => {
     const [updateUser] = useUpdateUserMutation();
+    const [deleteUser] = useDeleteUserMutation();
+
     const { data, isLoading, isError } = useGetAllUsersQuery(undefined);
     const users: TUser[] | undefined = data?.data;
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [roleModalIsOpen, setRoleModalIsOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
     const [selectedRole, setSelectedRole] = useState<TUserRole>('user');
 
-    const openModal = (user: TUser) => {
+    const openRoleModal = (user: TUser) => {
         setSelectedUser(user);
         setSelectedRole(user.role as TUserRole);
-        setModalIsOpen(true);
+        setRoleModalIsOpen(true);
     };
 
-    const closeModal = () => {
-        setModalIsOpen(false);
+    const closeRoleModal = () => {
+        setRoleModalIsOpen(false);
+        setSelectedUser(null);
+    };
+
+    const openDeleteModal = (user: TUser) => {
+        setSelectedUser(user);
+        setDeleteModalIsOpen(true);
+    };
+
+    const closeDeleteModal = () => {
+        setDeleteModalIsOpen(false);
         setSelectedUser(null);
     };
 
@@ -40,7 +53,7 @@ const AllUsers = () => {
         setSelectedRole(event.target.value as TUserRole);
     };
 
-    const handleSave = async () => {
+    const handleSaveRole = async () => {
         if (selectedUser) {
             const userData = {
                 role: selectedRole,
@@ -55,16 +68,31 @@ const AllUsers = () => {
                 console.error(error?.data?.message);
                 toast.error(error?.data?.message || "An error occurred.");
             }
-            closeModal();
+            closeRoleModal();
+        }
+    };
+
+    const handleDeleteUser = async () => {
+        if (selectedUser) {
+            try {
+                const res = await deleteUser(selectedUser._id).unwrap();
+                if (res?.success) {
+                    toast.success(res?.data?.message);
+                }
+            } catch (error: any) {
+                console.error(error?.data?.message);
+                toast.error(error?.data?.message || "An error occurred.");
+            }
+            closeDeleteModal();
         }
     };
 
     if (isLoading) {
-        return <Loader/>
+        return <Loader />
     }
 
     if (isError) {
-        return <ErrorComponent/>
+        return <ErrorComponent />
     }
 
     return (
@@ -86,9 +114,9 @@ const AllUsers = () => {
                         {users?.map((user) => (
                             <tr key={user._id} className="hover:bg-gray-100">
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <img 
-                                        src={user.image} 
-                                        alt={`${user.name}'s profile`} 
+                                    <img
+                                        src={user.image}
+                                        alt={`${user.name}'s profile`}
                                         className="w-10 h-10 rounded-full object-cover"
                                     />
                                 </td>
@@ -104,12 +132,18 @@ const AllUsers = () => {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {user.phone}
                                 </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <button 
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex justify-center items-center gap-4">
+                                    <button
                                         className="text-white bg-green-500 px-4 py-2 rounded"
-                                        onClick={() => openModal(user)}
+                                        onClick={() => openRoleModal(user)}
                                     >
                                         Edit
+                                    </button>
+                                    <button
+                                        className="text-white bg-red-500 px-4 py-2 rounded"
+                                        onClick={() => openDeleteModal(user)}
+                                    >
+                                        Delete
                                     </button>
                                 </td>
                             </tr>
@@ -118,7 +152,8 @@ const AllUsers = () => {
                 </table>
             </div>
 
-            {modalIsOpen && selectedUser && (
+            {/* Role Modal */}
+            {roleModalIsOpen && selectedUser && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/3">
                         <h2 className="text-xl font-bold mb-4">Edit User Role</h2>
@@ -132,17 +167,41 @@ const AllUsers = () => {
                             <option value="admin">Admin</option>
                         </select>
                         <div className="mt-6 flex justify-end space-x-4">
-                            <button 
-                                onClick={closeModal}
+                            <button
+                                onClick={closeRoleModal}
                                 className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-sm"
                             >
                                 Cancel
                             </button>
-                            <button 
-                                onClick={handleSave}
+                            <button
+                                onClick={handleSaveRole}
                                 className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-sm"
                             >
                                 Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Modal */}
+            {deleteModalIsOpen && selectedUser && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/3">
+                        <h2 className="text-xl font-bold mb-4">Delete User</h2>
+                        <p className="mb-4">Are you sure you want to delete {selectedUser.name}?</p>
+                        <div className="mt-6 flex justify-end space-x-4">
+                            <button
+                                onClick={closeDeleteModal}
+                                className="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-sm"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleDeleteUser}
+                                className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-sm"
+                            >
+                                Delete
                             </button>
                         </div>
                     </div>
