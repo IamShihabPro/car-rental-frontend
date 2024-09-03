@@ -17,7 +17,7 @@ const HeroModal: React.FC<HeroModalProps> = ({ isOpen, onClose, cars, isLoading 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 transition-opacity duration-300 ease-in-out">
             <div className="bg-white rounded-lg overflow-hidden shadow-2xl max-w-3xl w-full relative animate-slideUp mx-2">
-                <div className="p-6">
+                <div className="p-6 max-h-[80vh] overflow-y-auto"> {/* Set a max height and make content scrollable */}
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-3xl font-extrabold text-gray-900">Available Cars</h2>
                         <button
@@ -34,17 +34,17 @@ const HeroModal: React.FC<HeroModalProps> = ({ isOpen, onClose, cars, isLoading 
                             {cars.length > 0 ? (
                                 <ul className="space-y-4">
                                     {cars.map(car => (
-                                        <div className='flex flex-row justify-between items-center bg-gray-50 '>
-                                            <li key={car._id} className="flex items-center rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
+                                        <div key={car._id} className='flex flex-row justify-between items-center bg-gray-50 p-4 rounded-lg hover:shadow-md transition-shadow duration-300'>
+                                            <li className="flex items-center">
                                                 <img src={car.image} alt={car.name} className="w-28 h-28 object-cover rounded-lg mr-6" />
                                                 <div className="flex flex-col">
                                                     <h3 className="text-xl font-semibold text-gray-800">{car.name}</h3>
                                                     <p className="text-sm text-gray-500">{car.brand}</p>
                                                     <p className="mt-2 text-lg font-medium text-gray-700">৳ {car.pricePerHour}/hour</p>
                                                     <p className="text-sm text-gray-500">{car.location}</p>
-                                                </div>                                          
+                                                </div>
                                             </li>
-                                            <Link to={`/cars/${car?._id}`} className="bg-blue-500 px-6 py-3 text-white font-semibold transition-colors duration-300 rounded-sm shadow-md">
+                                            <Link to={`/cars/${car._id}`} className="bg-blue-500 px-6 py-3 text-white font-semibold transition-colors duration-300 rounded-sm shadow-md">
                                                 Details
                                             </Link>
                                         </div>
