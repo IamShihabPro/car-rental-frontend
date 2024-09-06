@@ -14,23 +14,23 @@ const Carousel = () => {
   const sliderData = [
     {
       imageUrl: image1,
-      title: 'Lismore Family Tent',
-      description: 'An Enclosed Front Awning, King Size Bedrooms, Sewn-in Groundsheet, All in One Package',
-      buttonText: 'SHOP NOW',
+      title: 'Luxury SUVs for Rent',
+      description: 'Experience the Comfort and Power of Our Premium SUV Selection. Perfect for Family Trips.',
+      buttonText: 'RENT NOW',
     },
     {
       imageUrl: image2,
-      title: 'Lowe Alpine Backpacks',
-      description: 'With Over 50 years of Experience Designing World-Class Carry Systems',
-      buttonText: 'SHOP NOW',
+      title: 'Affordable Compact Cars',
+      description: 'Economical and Easy to Drive. Ideal for City Travel and Budget-Friendly Rentals.',
+      buttonText: 'RENT NOW',
     },
     {
       imageUrl: image3,
-      title: 'SKPR 2.0',
-      description: 'Dedicated Focus on the Integration of Responsible Materials & on Performance',
-      buttonText: 'SHOP NOW',
+      title: 'Electric Cars Available',
+      description: 'Go Green with Our Eco-Friendly Electric Vehicles. Sustainable and Efficient.',
+      buttonText: 'RENT NOW',
     },
-  ];
+  ];  
 
   return (
     <div className="bg-gray-900 -mt-34 sm:-mt-6 md:-mt-8 lg:-mt-8 py-4">
