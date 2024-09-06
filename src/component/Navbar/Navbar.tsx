@@ -59,7 +59,7 @@ const Navbar = () => {
                     <div className='hidden md:block lg:block'>
                         <NavLink to="/" className="flex items-center gap-2 text-white">
                             <Link to='/' className="font-bold text-xl">
-                                <img src={logo} className='w-28' alt="" />
+                                <img src={logo} className='w-20' alt="" />
                             </Link>
                         </NavLink>
                     </div>
@@ -110,7 +110,7 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <div className="-mr-2 flex md:hidden shadow-md text-white">
+                    <div className={`-mr-2 flex md:hidden shadow-md ${theme?.isDarkMode === true ? 'text-white' : 'text-blue-500'}`}>
                         <Hamburger toggled={isOpen} toggle={setIsOpen} />
                     </div>
 
@@ -128,7 +128,7 @@ const Navbar = () => {
                 </div>
 
                 <div className={`md:hidden bg-gray-800 lg:hidden py-2 px-2 shadow-sm fixed left-0 top-0 h-[100vh] w-2/3 transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                    <div className="-mr-2 bg-gray-800 md:hidden shadow-md inline-block text-white p-3">
+                    <div className={`-mr-2 bg-gray-800 md:hidden shadow-md inline-block text-white p-3`}>
                         <Hamburger toggled={isOpen} toggle={setIsOpen} />
                     </div>
 
