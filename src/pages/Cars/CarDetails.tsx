@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useGetSingleCarQuery } from '@/redux/feature/cars/carsApi';
 import Loader from '@/component/Loader/Loader';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 
 export type TBooking = {
   carId: string;
@@ -15,6 +17,7 @@ const CarDetails: React.FC = () => {
   const [zoomed, setZoomed] = useState(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const lensRef = useRef<HTMLDivElement | null>(null);
+  const theme = useSelector((state: RootState) => state.theme);
 
   const car = data?.data;
 
@@ -53,7 +56,7 @@ const CarDetails: React.FC = () => {
   }
 
   return (
-    <section className="bg-gray-900 min-h-screen py-16">
+    <section className={`min-h-screen py-16 ${theme?.isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
       <div className="container mx-auto px-4 mt-20">
         <div className="flex flex-col md:flex-row gap-10">
           {/* Car Image with Magnifier */}
@@ -84,11 +87,11 @@ const CarDetails: React.FC = () => {
           </div>
 
           {/* Car Details */}
-          <div className="md:w-1/2 text-white">
+          <div className={`md:w-1/2 ${theme?.isDarkMode ? 'text-white' : 'text-gray-700'} `}>
             <h2 className="text-3xl font-extrabold mb-6 border-b-4 border-blue-500 inline-block pb-2">
               {car.name}
             </h2>
-            <p className="text-xl text-gray-300 mb-6 leading-relaxed">
+            <p className="text-xl text-gray-400 mb-6 leading-relaxed">
               {car.description}
             </p>
 
