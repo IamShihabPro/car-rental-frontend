@@ -1,9 +1,3 @@
-## Admin email and password
-```js
-email: shihab@gmail.com
-password: 123456
-```
-
 ## How to install the project 
 
 At first clone the project and open command prompt and type
