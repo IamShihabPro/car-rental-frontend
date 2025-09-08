@@ -4,7 +4,8 @@ import { RootState } from '../store';
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://car-rental-reservation-production.up.railway.app/api',
+    // baseUrl: 'https://car-rental-reservation-production.up.railway.app/api',
+    baseUrl: 'https://car-rent-kappa-lyart.vercel.app/api',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).user.token;
       if (token) {
